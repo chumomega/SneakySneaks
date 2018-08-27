@@ -19,7 +19,7 @@ public class SneakysneaksApplication{
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080");
+                registry.addMapping("/greeting-javaconfig").allowedOrigins("https://safe-anchorage-62211.herokuapp.com");
             }
         };
     }
