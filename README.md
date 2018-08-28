@@ -22,9 +22,8 @@
 
 
 ### Useful Links
-* https://www.vojtechruzicka.com/documenting-spring-boot-rest-api-swagger-springfox/
-* [API] (link to heroku)
-* [API Documentation] (/swagger-ui.html)
+* [API Documentation] (https://safe-anchorage-62211.herokuapp.com/swagger-ui.html)
+
 
 
 
