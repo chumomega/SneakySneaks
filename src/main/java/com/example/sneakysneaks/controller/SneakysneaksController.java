@@ -53,7 +53,7 @@ public class SneakysneaksController {
 	
 	@ApiOperation(value= "remove sneaker", notes = "add id for the sneaker you want to delete ")
 	@RequestMapping(path="/removeSneaker", method = RequestMethod.DELETE, produces = "application/json")
-	public boolean addSneaker(int product_number){
+	public boolean removeSneaker(int product_number){
 		return jdbcSneakerRepository.removeSneaker(product_number);
 	}
 	

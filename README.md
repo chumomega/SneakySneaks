@@ -2,7 +2,7 @@
 ## Developed by Chuma Okoro
 
 
-### Description - Sample API for accessing Sneaker and Accessory database
+### Description - Sample API for accessing Sneaker database
 
 ### Technologies
 - Language - Java
@@ -23,6 +23,7 @@
 
 ### Useful Links
 * [API Documentation] (https://safe-anchorage-62211.herokuapp.com/swagger-ui.html)
+
 
 
 
