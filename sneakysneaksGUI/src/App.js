@@ -1,37 +1,34 @@
 import React, { Component } from 'react';
 import './App.css';
-//import { NavBar } from './components/NavBar'
+import NavBar from './components/NavBar/NavBar';
+import Home from './components/Home/Home'
 
 import {
   BrowserRouter as Router,
-  Route
+  Route, Switch
 } from "react-router-dom";
+import Login from './components/Login/Login';
 
 class App extends Component {
   render() {
     return (
-      <div>This is a test</div>
+      <div className="App container-fluid">
+      
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component />
+            <Route path="/about" component />
+            <Route path="/sneakers" component />
+            <Route path="/mysneakers" component />
+            <NavBar />
+          </Switch>
+        </Router>
+      </div>
 
-      // <Router>
-      //   <div className="App container-fluid">
-      //     <Route exact path="/" component />
-      //     <Route path="/login" component />
-      //     <Route path="/register" component/>
-
-
-      //       <p>
-      //         This is the SneakySneaks GUI
-      //       </p>
-      //       <p>Click <a href="https://safe-anchorage-62211.herokuapp.com/swagger-ui.html">here</a> for the API documentation</p>
-            
-
-          
-      //   </div>
-      // </Router>
     );
   }
 }
 
 export default App;
-
-          //<NavBar/>
