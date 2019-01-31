@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value = "This is the controller for the Sneakysneaks application")
+@RequestMapping("/api")
 public class SneakysneaksController {
 	
 	@Autowired
@@ -36,6 +37,12 @@ public class SneakysneaksController {
 		else {
 			return true;
 		}
+	}
+	
+	@ApiOperation(value= "returns a list of shoes", notes = " enter the brand to do a search for the shoe")
+	@RequestMapping(path="/getSneakers", method = RequestMethod.GET, produces = "application/json")
+	public ArrayList<Sneaker> getSneakers(){
+		return (ArrayList<Sneaker>) jdbcSneakerRepository.getSneakers();
 	}
 	
 	
