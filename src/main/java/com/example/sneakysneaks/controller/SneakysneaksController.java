@@ -1,6 +1,7 @@
 package com.example.sneakysneaks.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class SneakysneaksController {
 	
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String index() {		
-		return "Welcome to the Sneakysneaks App";
+		return "Welcome to the Sneakysneaks App, the time right now is " + new Date();
 	}
 	
 	

@@ -12,7 +12,7 @@
 - API Documentation - Swagger
 - Extras - JDBC API
 
-### How to Use
+### How to Run Backend
 1. run ```git clone https://github.com/chumomega/SneakySneaks.git``` to clone the repo
 2. open project in your IDE
 3. navigate to the package ```com.example.sneakysneaks``` 

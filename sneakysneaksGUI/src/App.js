@@ -8,6 +8,7 @@ import {
   Route, Switch
 } from "react-router-dom";
 import Login from './components/Login/Login';
+import Landing from './components/Landing/Landing';
 
 class App extends Component {
   state = {
@@ -22,18 +23,18 @@ class App extends Component {
       //user: props.location.state
     }
   }
-  componentDidMount() {
-    fetch('/api/getSneakers')
-      .then(response => response.json())
-      .then(json => {
-        let sneakers = json.items;
-        this.setState({ sneakers: sneakers });
-        // console.log(" This is the number of clubs in the carousel " + this.state.books.length);
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+  // componentDidMount() {
+  //   fetch('/api/getSneakers')
+  //     .then(response => response.json())
+  //     .then(json => {
+  //       let sneakers = json.items;
+  //       this.setState({ sneakers: sneakers });
+  //       // console.log(" This is the number of clubs in the carousel " + this.state.books.length);
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
 
   render() {
     return (
@@ -43,6 +44,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/landing" component={Landing} />
             <Route path="/register" component />
             <Route path="/about" component />
             <Route path="/sneakers" component />
@@ -50,6 +52,9 @@ class App extends Component {
             <NavBar />
           </Switch>
         </Router>
+
+
+        {/* <SneakerList sneakers={this.state.sneakers}/> */}
       </div>
 
     );

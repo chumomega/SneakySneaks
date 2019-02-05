@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Link } from 'react-router-dom'
 
-class Login extends Component {
+class Landing extends Component {
   render() {
     return (
       <div className="">
@@ -23,4 +23,4 @@ class Login extends Component {
       }
     }
     
-export default Login
+export default Landing
