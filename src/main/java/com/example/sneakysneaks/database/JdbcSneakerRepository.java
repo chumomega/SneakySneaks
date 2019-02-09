@@ -39,8 +39,8 @@ public class JdbcSneakerRepository implements SneakerRepository{
 	}
 
 	@Override
-	public boolean addSneaker(String brand, String name, int size, double price) {
-		int numAffectedRows = jdbcTemplate.update(SQL_INSERT_SNEAKER, brand, name, size, price );
+	public boolean addSneaker(String brand, String name, int size, double price, String about, String picture) {
+		int numAffectedRows = jdbcTemplate.update(SQL_INSERT_SNEAKER, brand, name, size, price, about, picture );
 		if(numAffectedRows > 0) {
 			return true;
 		}
@@ -68,9 +68,11 @@ public class JdbcSneakerRepository implements SneakerRepository{
 						rs.getString("brand"), 
 						rs.getString("name"),
 						rs.getInt("size"),
-						rs.getDouble("price"));
+						rs.getDouble("price"),
+						rs.getString("about"),
+						rs.getString("picture")
+						);
 		}
-
 }
 
 

@@ -1,26 +1,41 @@
 import React, { Component } from 'react';
-import {Link } from 'react-router-dom'
+import SneakerList from '../SneakerList/SneakerList';
 
 class Landing extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      sneakers: [],
+    }
+  }
+
+  componentDidMount() {
+    fetch('/api/getSneakers')
+      .then(response => response.json())
+      .then(response => {
+        let sneakers = response;
+        this.setState({ sneakers: sneakers });
+
+        // console.log(" This is the number of clubs in the carousel " + this.state.books.length);
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   render() {
+
+    console.log(this.state.sneakers)
     return (
       <div className="">
-        <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+        <h1>This is the landing page. Welcome Dana</h1>
+        <SneakerList sneakers={this.state.sneakers} listName="Main"/>
+        
 
-            <label for="exampleFormControlInput2">Password</label>
-            <input type="password" class="form-control" id="exampleFormControlInput2" placeholder="----------"/>
 
-            <Link to="/landing" className="btn btn-primary mb-2">Login</Link>
- 
-          </div>
-            
-          </form>
       </div>
-        );
-      }
-    }
-    
+    );
+  }
+}
+
 export default Landing

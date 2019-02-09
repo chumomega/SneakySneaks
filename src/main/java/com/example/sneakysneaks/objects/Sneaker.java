@@ -9,13 +9,17 @@ public class Sneaker {
 	private String name;
 	private int size; 
 	private double price;
+	private String about;
+	private String picture;
     
-    public Sneaker(int product_number, String brand, String name, int size, double price) {
+    public Sneaker(int product_number, String brand, String name, int size, double price, String about, String picture) {
     	this.setProduct_number(product_number);
     	this.setBrand(brand);
     	this.setName(name);
     	this.setSize(size);
     	this.setPrice(price);
+    	this.setAbout(about);
+    	this.setPicture(picture);
     }
 
 	public int getProduct_number() {
@@ -56,6 +60,22 @@ public class Sneaker {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
     
 

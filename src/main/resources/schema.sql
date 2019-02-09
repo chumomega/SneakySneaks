@@ -3,7 +3,10 @@ CREATE TABLE sneakers(
     brand TEXT,
     name TEXT ,
     size NUMBER,  
-    price NUMBER
+    price NUMBER,
+    about TEXT,
+    picture TEXT
+
 );
 
 CREATE TABLE accessories(

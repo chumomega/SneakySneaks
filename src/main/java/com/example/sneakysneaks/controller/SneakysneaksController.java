@@ -55,8 +55,8 @@ public class SneakysneaksController {
 	
 	@ApiOperation(value= "add sneaker", notes = "add ALL parameters for a sneaker")
 	@RequestMapping(path="/addSneaker", method = RequestMethod.POST, consumes= "application/json", produces = "application/json")
-	public boolean addSneaker(String brand, String name, int size, double price){
-		return jdbcSneakerRepository.addSneaker(brand, name, size, price);
+	public boolean addSneaker(String brand, String name, int size, double price, String about, String picture){
+		return jdbcSneakerRepository.addSneaker(brand, name, size, price, about, picture);
 	}
 	
 	@ApiOperation(value= "remove sneaker", notes = "add id for the sneaker you want to delete ")

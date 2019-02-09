@@ -23,18 +23,6 @@ class App extends Component {
       //user: props.location.state
     }
   }
-  // componentDidMount() {
-  //   fetch('/api/getSneakers')
-  //     .then(response => response.json())
-  //     .then(json => {
-  //       let sneakers = json.items;
-  //       this.setState({ sneakers: sneakers });
-  //       // console.log(" This is the number of clubs in the carousel " + this.state.books.length);
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
 
   render() {
     return (
@@ -45,10 +33,10 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/landing" component={Landing} />
-            <Route path="/register" component />
+            {/* <Route path="/register" component />
             <Route path="/about" component />
             <Route path="/sneakers" component />
-            <Route path="/mysneakers" component />
+            <Route path="/mysneakers" component /> */}
             <NavBar />
           </Switch>
         </Router>

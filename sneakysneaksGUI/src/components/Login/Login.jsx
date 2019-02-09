@@ -6,12 +6,12 @@ class Login extends Component {
     return (
       <div className="">
         <form>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+          <div className="form-group">
+            <label htmlFor="exampleFormControlInput1">Email address</label>
+            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
 
-            <label for="exampleFormControlInput2">Password</label>
-            <input type="password" class="form-control" id="exampleFormControlInput2" placeholder="----------"/>
+            <label htmlFor="exampleFormControlInput2">Password</label>
+            <input type="password" className="form-control" id="exampleFormControlInput2" placeholder="----------"/>
 
             <Link to="/landing" className="btn btn-primary mb-2">Login</Link>
  

@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
+import Sneaker from '../Sneaker/Sneaker'
 
-class EmployeeList extends React.Component{
+class SneakerList extends Component{
 	render() {
-		const employees = this.props.employees.map(employee =>
-			<Employee key={employee._links.self.href} employee={employee}/>
-		);
+		const sneakers = this.props.sneakers.map(sneaker =>
+			<Sneaker key={sneaker.product_number} name={sneaker.name} brand={sneaker.brand} size={sneaker.size}  />
+    );
+    const listName = this.props.listName;
+
 		return (
-			<table>
-				<tbody>
-					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Description</th>
-					</tr>
-					{employees}
-				</tbody>
-			</table>
+			<div>
+        <h1>{listName} Sneakers</h1>
+
+        {sneakers}
+
+      </div>
 		)
 	}
 }
+
+
+export default SneakerList
