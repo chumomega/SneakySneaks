@@ -8,6 +8,14 @@ CREATE TABLE sneakers(
     picture TEXT
 
 );
+CREATE TABLE users(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    firstName TEXT,
+    lastName TEXT ,
+    description NUMBER,  
+    email NUMBER
+    -- phone_number TEXT
+);
 
 CREATE TABLE accessories(
     product_number INTEGER IDENTITY PRIMARY KEY,
