@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom'
 import './Home.css'
 
 class Home extends Component {
-  state = {
-    welcome: ""
+  constructor(props) {
+    console.log("react is here")
+    super(props);
+    this.state = {
+      welcome: ""
+    }
   }
 
   componentDidMount() {
     setInterval(this.welcome, 250);
 }
 
-  welcome = () => {
+  welcome (){
     fetch('/api/')
         .then(response => response.text())
         .then(message => {

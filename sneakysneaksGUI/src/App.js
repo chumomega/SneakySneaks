@@ -11,15 +11,13 @@ import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
 
 class App extends Component {
-  state = {
-    isLoading: true,
-    groups: []
-  };
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       sneakers: [],
+      isLoading: true,
+      groups: []
       //user: props.location.state
     }
   }
@@ -27,6 +25,7 @@ class App extends Component {
   render() {
     return (
       <div className="App container-fluid">
+      <p>hello</p>
 
         <Router>
           <Switch>
