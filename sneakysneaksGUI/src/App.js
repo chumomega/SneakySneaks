@@ -25,8 +25,6 @@ class App extends Component {
   render() {
     return (
       <div className="App container-fluid">
-      <p>hello</p>
-
         <Router>
           <Switch>
             <Route exact path="/" component={Home} />
