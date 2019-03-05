@@ -12,9 +12,9 @@ CREATE TABLE users(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     firstName TEXT,
     lastName TEXT ,
-    description NUMBER,  
-    email NUMBER
-    -- phone_number TEXT
+    description TEXT,  
+    email TEXT,
+    phone_number TEXT
 );
 
 CREATE TABLE accessories(

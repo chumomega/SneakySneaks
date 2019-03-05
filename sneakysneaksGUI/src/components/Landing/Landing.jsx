@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SneakerList from '../SneakerList/SneakerList';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 class Landing extends Component {
   constructor(props){
@@ -29,7 +30,9 @@ class Landing extends Component {
     return (
       <div className="">
         <h1>This is the landing page. Welcome Dana</h1>
-        <SneakerList sneakers={this.state.sneakers} listName="Main"/>
+        <ErrorBoundary>
+          <SneakerList sneakers={this.state.sneakers} listName="Main"/>
+        </ErrorBoundary>
         
 
 

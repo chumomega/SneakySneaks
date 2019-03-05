@@ -18,3 +18,6 @@ insert into accessories values(5, 'hats', 'Supreme', 'Blue Reflective 5 panel');
 insert into accessories values(6, 'bags', 'Adidas', 'Black Crossbody Bag');
 insert into accessories values(7, 'watches', 'Fossil', 'Brown Hybrid watch');
 insert into accessories values(8, 'watches', 'Samsung', 'Classic Gear S3');
+
+
+insert into users values(1, 'Chuma', 'Okoro', 'What do you want me to  say??', 'chuma.okoro76@gmail.com', '6466262646');
