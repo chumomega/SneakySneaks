@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sneakysneaks.database.SneakerRepository;
 import com.example.sneakysneaks.objects.Sneaker;
+import com.google.firebase.FirebaseApp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +49,7 @@ public class SneakysneaksController {
 	
 	
 	@ApiOperation(value= "returns a list of shoes", notes = " enter the brand to do a search for the shoe")
-	@RequestMapping(path="/findbrand", method = RequestMethod.POST, consumes= "application/json", produces = "application/json")
+	@RequestMapping(path="/findbrand", method = RequestMethod.GET, consumes= "application/json", produces = "application/json")
 	public ArrayList<Sneaker> findSneakerByBrand(String brand){
 		return (ArrayList<Sneaker>) jdbcSneakerRepository.findBrand(brand);
 	}

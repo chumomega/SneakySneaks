@@ -1,48 +1,58 @@
 package com.example.sneakysneaks.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserController {
-    private ClientRegistration registration;
-
-    public UserController(ClientRegistrationRepository registrations) {
-        this.registration = registrations.findByRegistrationId("okta");
+	
+    @ApiOperation(value= "check if database is up")
+   	@RequestMapping(path="/api/user", method = RequestMethod.GET)
+   	public String getUser() {
+    	return "User";
+    	
     }
 
-    @GetMapping("/api/user")
-    public ResponseEntity<?> getUser(@AuthenticationPrincipal OAuth2User user) {
-        if (user == null) {
-            return new ResponseEntity<>("", HttpStatus.OK);
-        } else {
-            return ResponseEntity.ok().body(user.getAttributes());
-        }
+    @ApiOperation(value= "check if database is up")
+	@RequestMapping(path="/api/logout", method = RequestMethod.GET)
+    public String logoutUser() {
+    	return "Logout User";
+    	
     }
+    
+    @ApiOperation(value= "check if database is up")
+	@RequestMapping(path="/api/signup", method = RequestMethod.POST, consumes= "application/json")
+    public String signupUser(String email, String password, String phoneNumber, String displayName) {
+    	CreateRequest request = new CreateRequest()
+    		    .setEmail(email)
+    		    .setEmailVerified(false)
+    		    .setPassword(password)
+    		    .setPhoneNumber(phoneNumber)
+    		    .setDisplayName(displayName)
+    		    .setDisabled(false);
 
-    @PostMapping("/api/logout")
-    public ResponseEntity<?> logout(HttpServletRequest request,
-                                    @AuthenticationPrincipal(expression = "idToken") OidcIdToken idToken) {
-        // send logout URL to client so they can initiate logout
-        String logoutUrl = this.registration.getProviderDetails()
-                .getConfigurationMetadata().get("end_session_endpoint").toString();
-
-        Map<String, String> logoutDetails = new HashMap<>();
-        logoutDetails.put("logoutUrl", logoutUrl);
-        logoutDetails.put("idToken", idToken.getTokenValue());
-        request.getSession(false).invalidate();
-        return ResponseEntity.ok().body(logoutDetails);
+		UserRecord userRecord;
+		try {
+			userRecord = FirebaseAuth.getInstance().createUser(request);
+    		System.out.println("Successfully created new user: " + userRecord.getUid());
+		} 
+		catch (FirebaseAuthException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Was not able to create the user");
+		}
+    	return "Signup User";
+    	
     }
+	
+    
 }
