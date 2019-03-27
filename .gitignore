@@ -40,4 +40,4 @@ secrets.yml
 .sts4-cache
 /node_modules
 src/main/resources/static/built/
-src/main/resources/sneakysneaks-f46f0-firebase-adminsdk-cvhgx-281d4e8e91.json
+src/main/resources/serviceAccountKey.json

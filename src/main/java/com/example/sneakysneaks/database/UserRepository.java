@@ -1,14 +1,15 @@
-//package com.example.sneakysneaks.database;
-//
-//import org.springframework.stereotype.Repository;
-//import com.example.sneakysneaks.objects.User;
-//
-//@Repository
-//public interface UserRepository {
-//	
-//	User getUser(int id);
-//	boolean addUser(int id, String firstName, String lastName, String email, String phoneNumber, String description);
-//	boolean removeUser(int id);
-//	Iterable<User> getUsers();
-//
-//}
+package com.example.sneakysneaks.database;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.example.sneakysneaks.objects.User;
+
+
+
+public interface UserRepository extends CrudRepository<User, Long>{
+	List<User> findByLastName(String lastName);
+	
+
+}

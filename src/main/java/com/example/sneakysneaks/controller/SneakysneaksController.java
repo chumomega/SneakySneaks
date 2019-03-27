@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sneakysneaks.database.SneakerRepository;
 import com.example.sneakysneaks.objects.Sneaker;
-import com.google.firebase.FirebaseApp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

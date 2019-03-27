@@ -1,19 +1,21 @@
 package com.example.sneakysneaks.controller;
 
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
-import com.google.firebase.auth.UserRecord.CreateRequest;
+import com.example.sneakysneaks.database.UserRepository;
+import com.example.sneakysneaks.objects.User;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserController {
+	@Autowired
+	UserRepository repo;
 	
     @ApiOperation(value= "check if database is up")
    	@RequestMapping(path="/api/user", method = RequestMethod.GET)
@@ -28,28 +30,24 @@ public class UserController {
     	return "Logout User";
     	
     }
+    @ApiOperation(value= "get list of users")
+	@RequestMapping(path="/api/users", method = RequestMethod.GET)
+    public ArrayList<User> getusers(){
+    	return (ArrayList<User>) repo.findAll();
+    	
+    }
+    @ApiOperation(value= "get list of users with a certain last name")
+	@RequestMapping(path="/api/userwithlastname", method = RequestMethod.GET)
+    public ArrayList<User> findbyLast(String lastName){
+    	return (ArrayList<User>) repo.findByLastName(lastName);
+    }
     
     @ApiOperation(value= "check if database is up")
 	@RequestMapping(path="/api/signup", method = RequestMethod.POST, consumes= "application/json")
-    public String signupUser(String email, String password, String phoneNumber, String displayName) {
-    	CreateRequest request = new CreateRequest()
-    		    .setEmail(email)
-    		    .setEmailVerified(false)
-    		    .setPassword(password)
-    		    .setPhoneNumber(phoneNumber)
-    		    .setDisplayName(displayName)
-    		    .setDisabled(false);
-
-		UserRecord userRecord;
-		try {
-			userRecord = FirebaseAuth.getInstance().createUser(request);
-    		System.out.println("Successfully created new user: " + userRecord.getUid());
-		} 
-		catch (FirebaseAuthException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Was not able to create the user");
-		}
+    public String signupUser(String firstName, String lastName, String description, String email, String phoneNumber) {
+    	
+    	repo.save(new User(firstName, lastName, description, email, phoneNumber));
+    	
     	return "Signup User";
     	
     }
