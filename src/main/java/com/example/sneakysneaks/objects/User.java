@@ -4,14 +4,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Data;
+import lombok.ToString;
 
 
 
 @Entity
+@ToString(exclude = "password")
+@Data
 public class User {
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
 	private Long id;
 	private String firstName;
+	
+	//public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+	private @JsonIgnore String password;
+
 	private String lastName;
 	private String description;
 	private String email;
@@ -20,13 +34,25 @@ public class User {
 	public User() {
 		
 	}
-	public User(String firstName, String lastName, String description, String email, String phoneNumber) {
+	
+	private String[] roles;
+
+//	public void setPassword(String password) {
+//		this.password = PASSWORD_ENCODER.encode(password);
+//	}
+	
+	public User(String firstName, String lastName, String description, String email, String phoneNumber, String password, String... roles) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setDescription(description);
 		this.setEmail(email);
 		this.setPhoneNumber(phoneNumber);
+		//this.setPassword(password);
+		this.roles=roles;
 	}
+	
+
+
 	/**
 	 * @return the firstName
 	 */
@@ -86,6 +112,20 @@ public class User {
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * @return the roles
+	 */
+	public String[] getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(String[] roles) {
+		this.roles = roles;
 	}
 	
 	

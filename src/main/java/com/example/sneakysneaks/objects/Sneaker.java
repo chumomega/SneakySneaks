@@ -1,34 +1,37 @@
 package com.example.sneakysneaks.objects;
 
-//import lombok.Data;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import lombok.Data;
 
 
+@Data
+@Entity
 public class Sneaker {
-	private int product_number;
+	@Id @GeneratedValue (strategy=GenerationType.AUTO)
+	private Long product_number;
 	private String brand;
 	private String name;
 	private int size; 
 	private double price;
 	private String about;
 	private String picture;
+	
+	private @ManyToOne User user;
     
-    public Sneaker(int product_number, String brand, String name, int size, double price, String about, String picture) {
-    	this.setProduct_number(product_number);
+    public Sneaker(String brand, String name, int size, double price, String about, String picture, User user) {
     	this.setBrand(brand);
     	this.setName(name);
     	this.setSize(size);
     	this.setPrice(price);
     	this.setAbout(about);
     	this.setPicture(picture);
+    	this.user = user;
     }
-
-	public int getProduct_number() {
-		return product_number;
-	}
-
-	public void setProduct_number(int product_number) {
-		this.product_number = product_number;
-	}
 
 	public String getBrand() {
 		return brand;

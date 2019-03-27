@@ -36,17 +36,11 @@ public class UserController {
     	return (ArrayList<User>) repo.findAll();
     	
     }
-    @ApiOperation(value= "get list of users with a certain last name")
-	@RequestMapping(path="/api/userwithlastname", method = RequestMethod.GET)
-    public ArrayList<User> findbyLast(String lastName){
-    	return (ArrayList<User>) repo.findByLastName(lastName);
-    }
-    
+
     @ApiOperation(value= "check if database is up")
 	@RequestMapping(path="/api/signup", method = RequestMethod.POST, consumes= "application/json")
-    public String signupUser(String firstName, String lastName, String description, String email, String phoneNumber) {
-    	
-    	repo.save(new User(firstName, lastName, description, email, phoneNumber));
+    public String signupUser(String firstName, String lastName, String description, String email, String phoneNumber,String password) {
+    	repo.save(new User(firstName, lastName, description, email, phoneNumber, password));
     	
     	return "Signup User";
     	

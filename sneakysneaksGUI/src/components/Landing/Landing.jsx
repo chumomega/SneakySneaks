@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import SneakerList from '../SneakerList/SneakerList';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
+
 class Landing extends Component {
   constructor(props){
     super(props)
     this.state = {
       sneakers: [],
+      users: [],
     }
   }
 
@@ -16,12 +18,20 @@ class Landing extends Component {
       .then(response => {
         let sneakers = response;
         this.setState({ sneakers: sneakers });
-
-        // console.log(" This is the number of clubs in the carousel " + this.state.books.length);
       })
       .catch(err => {
         console.log(err)
       })
+
+      fetch('/api/users')
+      .then(response => response.json())
+      .then(response => {
+        let users = response;
+        this.setState({ users: users });
+      })
+      .catch(err => {
+        console.log(err)
+      }) 
   }
 
   render() {
@@ -34,8 +44,6 @@ class Landing extends Component {
           <SneakerList sneakers={this.state.sneakers} listName="Main"/>
         </ErrorBoundary>
         
-
-
       </div>
     );
   }
