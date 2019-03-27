@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.ToString;
 
 
 @Data
@@ -22,6 +23,10 @@ public class Sneaker {
 	private String picture;
 	
 	private @ManyToOne User user;
+	
+	public Sneaker() {
+		
+	}
     
     public Sneaker(String brand, String name, int size, double price, String about, String picture, User user) {
     	this.setBrand(brand);

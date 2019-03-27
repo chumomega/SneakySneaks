@@ -35,8 +35,6 @@ class Landing extends Component {
   }
 
   render() {
-
-    console.log(this.state.sneakers)
     return (
       <div className="">
         <h1>This is the landing page. Welcome Dana</h1>
