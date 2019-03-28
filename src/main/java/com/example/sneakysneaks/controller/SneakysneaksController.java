@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class SneakysneaksController {
 	}
 	
 	@ApiOperation(value= "returns a list of shoes", notes = " enter the brand to do a search for the shoe")
-	@RequestMapping(path="/getSneakers", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(path="/getSneakers", method = RequestMethod.GET, produces = "application/hal+json")
 	public ArrayList<Sneaker> getSneakers(){
 		return (ArrayList<Sneaker>) sneakerRepo.findAll();
 	}
