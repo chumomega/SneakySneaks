@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 
 class Sneaker extends Component {
+    constructor(props) {
+		super(props);
+		this.handleDelete = this.handleDelete.bind(this);
+	}
     handleDelete() {
-		this.props.onDelete(this.props.employee);
+		this.props.onDelete(this.props.sneaker);
     }
     render() {
         return (

@@ -53,7 +53,7 @@ class SneakerList extends Component {
 
     render() {
         const sneakers = this.props.sneakers.map(sneaker =>
-            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} />
+            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} onDelete={this.props.onDelete}/>
         );
         const listName = this.props.listName;
 

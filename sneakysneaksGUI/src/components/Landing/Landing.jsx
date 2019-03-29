@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SneakerList from '../SneakerList/SneakerList';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
@@ -87,8 +88,6 @@ class Landing extends Component {
     }
 
     updatePageSize(pageSize) {
-        console.log("This is the page size: " + pageSize)
-        console.log("This is the state page size: " + this.state.pageSize)
         if (pageSize !== this.state.pageSize) {
             this.loadFromServer(pageSize);
         }
@@ -100,6 +99,7 @@ class Landing extends Component {
             <div className="">
                 <h1>This is the landing page. Welcome Dana</h1>
                 <ErrorBoundary>
+                    <CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate}/>
                     <SneakerList sneakers={this.state.sneakers} 
                         listName="Main" 
                         links={this.state.links}

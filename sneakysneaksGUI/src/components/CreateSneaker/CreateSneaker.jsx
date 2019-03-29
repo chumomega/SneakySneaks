@@ -54,3 +54,5 @@ class CreateSneaker extends Component{
 	}
 
 }
+
+export default CreateSneaker;
