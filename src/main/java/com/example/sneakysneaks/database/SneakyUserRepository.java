@@ -11,6 +11,7 @@ public interface SneakyUserRepository extends CrudRepository<SneakyUser, Long>{
  
 	SneakyUser save(SneakyUser user);
 	SneakyUser findByfirstName(String firstName);
+	SneakyUser findByEmail(String email);
 	
 
 }

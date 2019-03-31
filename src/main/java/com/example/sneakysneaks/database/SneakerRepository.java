@@ -14,11 +14,11 @@ public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, L
 	Sneaker save(@Param("sneaker") Sneaker sneaker);
 	
 	@Override
-	@PreAuthorize("@sneakerRepository.findById(#id)?.user?.firstName == authentication?.firstName")
+	@PreAuthorize("@sneakerRepository.findById(#id)?.user?.firstName == authentication?.user")
 	void deleteById(Long product_number);
 	
 	@Override
-	@PreAuthorize("#sneaker?.user?.firstName == authentication?.firstName")
+	@PreAuthorize("#sneaker?.user?.firstName == authentication?.user")
 	void delete(@Param("sneaker") Sneaker sneaker);
 
 	Iterable<Sneaker> findAll();

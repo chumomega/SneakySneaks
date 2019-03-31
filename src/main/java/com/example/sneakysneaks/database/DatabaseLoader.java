@@ -29,8 +29,7 @@ public class DatabaseLoader implements CommandLineRunner {
 		SneakyUser ezuku = this.userRepo.save(new SneakyUser("Ezuku", "Paul", "ring wearer", "hooter@gmail.com", "67543453768", "poop101", "SNEAKER_MANAGER"));
 		
 		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken("frodo", "doesn't matter",
-					AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
+				new UsernamePasswordAuthenticationToken("Frodo", "poop101", AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
 		
 		this.sneakerRepo.save(new Sneaker ("HealthCheck", "HealthCheck", 0, 0, "This is a test","https://www.google.com/", frodo));
 		this.sneakerRepo.save(new Sneaker ("HealthCheck", "HealthCheck", 0, 0, "This is a test","https://www.google.com/", frodo));
@@ -39,8 +38,7 @@ public class DatabaseLoader implements CommandLineRunner {
 		
 		
 		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken("chika", "doesn't matter",
-					AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
+				new UsernamePasswordAuthenticationToken("chika", "poop101", AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
 		
 		
 		this.sneakerRepo.save(new Sneaker ("Nike", "Travis Scott Air Force One", 9, 130,"la flame travis scott joints", "link is here", chika));
@@ -48,8 +46,7 @@ public class DatabaseLoader implements CommandLineRunner {
 		this.sneakerRepo.save(new Sneaker ("Adidas", "Bronze Raf Simons Stan Smiths", 7, 120, "oh you fancy huh", "rfdsv", chika));
 		
 		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken("ezuku", "doesn't matter",
-					AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
+				new UsernamePasswordAuthenticationToken("Ezuku", "poop101", AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
 		
 		this.sneakerRepo.save(new Sneaker ("Reebok", "Vetements Instapump fury", 9, 150, "shouts to my son kareem for recommending these", "reg", ezuku));
 		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 9, 150, "this nigga sulaiman really baited on this", "rgefgv", ezuku));
