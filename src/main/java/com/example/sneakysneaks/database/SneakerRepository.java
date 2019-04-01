@@ -6,7 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.example.sneakysneaks.objects.Sneaker;
 
-@PreAuthorize("hasRole('SNEAKER_MANAGER')")
+//TODO - I removed this in order to keep the auth that spring provided while also allowing users to view sneakers without errors
+// It is definitely a work around that could hurt the project if not fixed
+// @PreAuthorize("hasRole('SNEAKER_MANAGER')")
 public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, Long>{
 	
 	@Override
@@ -14,16 +16,10 @@ public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, L
 	Sneaker save(@Param("sneaker") Sneaker sneaker);
 	
 	@Override
-	@PreAuthorize("@sneakerRepository.findById(#id)?.user?.firstName == authentication?.user")
-	void deleteById(Long product_number);
+	@PreAuthorize("@sneakerRepository.findById(#id)?.user?.firstName == authentication?.name")
+	void deleteById(@Param("id")Long product_number);
 	
 	@Override
-	@PreAuthorize("#sneaker?.user?.firstName == authentication?.user")
+	@PreAuthorize("#sneaker?.user?.firstName == authentication?.name")
 	void delete(@Param("sneaker") Sneaker sneaker);
-
-	Iterable<Sneaker> findAll();
-
-	Iterable<Sneaker> findAllByBrand(String brand);
-	
-	
 }

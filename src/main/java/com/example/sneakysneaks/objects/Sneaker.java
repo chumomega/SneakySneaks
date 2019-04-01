@@ -40,6 +40,10 @@ public class Sneaker {
     public void setUser(SneakyUser user) {
 		this.user = user;
 	}
+    
+    public SneakyUser getUser() {
+		return this.user;
+	}
 
 	public String getBrand() {
 		return brand;

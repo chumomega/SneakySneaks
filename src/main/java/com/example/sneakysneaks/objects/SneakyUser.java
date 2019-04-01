@@ -43,19 +43,19 @@ public class SneakyUser {
 	public void setPassword(String password) {
 		this.password = PASSWORD_ENCODER.encode(password);
 	}
-	
+
 	public SneakyUser(String firstName, String lastName, String description, String email, String phoneNumber, String password, String... roles) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setDescription(description);
 		this.setEmail(email);
 		this.setPhoneNumber(phoneNumber);
-		//this.setPassword(password);
+		this.setPassword(password);
 		this.roles=roles;
 	}
 	
 	/**
-	 * @return the firstName
+	 * @return the password hashed
 	 */
 	public String getPassword() {
 		return password;

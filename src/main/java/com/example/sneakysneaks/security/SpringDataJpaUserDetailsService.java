@@ -21,9 +21,9 @@ public class SpringDataJpaUserDetailsService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		SneakyUser user = this.repository.findByEmail(email);
-		return new User(user.getEmail(), user.getPassword(),
+	public UserDetails loadUserByUsername(String firstName) throws UsernameNotFoundException {
+		SneakyUser user = this.repository.findByfirstName(firstName);
+		return new User(user.getFirstName(), user.getPassword(),
 				AuthorityUtils.createAuthorityList(user.getRoles()));
 	}
 
