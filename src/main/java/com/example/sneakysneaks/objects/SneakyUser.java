@@ -8,6 +8,9 @@ import javax.persistence.Id;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -18,12 +21,12 @@ import lombok.ToString;
 @Entity
 @ToString(exclude = "password")
 @Data
-public class User {
+public class SneakyUser {
 	@Id @GeneratedValue (strategy=GenerationType.AUTO)
 	private Long id;
 	private String firstName;
 	
-	//public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 	private @JsonIgnore String password;
 
 	private String lastName;
@@ -31,26 +34,32 @@ public class User {
 	private String email;
 	private String phoneNumber;
 
-	public User() {
+	public SneakyUser() {
 		
 	}
 	
 	private String[] roles;
 
-//	public void setPassword(String password) {
-//		this.password = PASSWORD_ENCODER.encode(password);
-//	}
-	
-	public User(String firstName, String lastName, String description, String email, String phoneNumber, String password, String... roles) {
+	public void setPassword(String password) {
+		this.password = PASSWORD_ENCODER.encode(password);
+	}
+
+	public SneakyUser(String firstName, String lastName, String description, String email, String phoneNumber, String password, String... roles) {
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
 		this.setDescription(description);
 		this.setEmail(email);
 		this.setPhoneNumber(phoneNumber);
-		//this.setPassword(password);
+		this.setPassword(password);
 		this.roles=roles;
 	}
 	
+	/**
+	 * @return the password hashed
+	 */
+	public String getPassword() {
+		return password;
+	}
 
 
 	/**
@@ -127,14 +136,4 @@ public class User {
 	public void setRoles(String[] roles) {
 		this.roles = roles;
 	}
-	
-	
-//	@Override
-//    public String toString() {
-//        return String.format(
-//                "Customer[id=%d, firstName='%s', lastName='%s']",
-//                id, firstName, lastName);
-//    }
-
-	
 }

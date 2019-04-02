@@ -51,7 +51,7 @@ public class SneakysneaksController {
 	@ApiOperation(value= "returns a list of shoes", notes = " enter the brand to do a search for the shoe")
 	@RequestMapping(path="/findbrand", method = RequestMethod.GET, consumes= "application/json", produces = "application/json")
 	public ArrayList<Sneaker> findSneakerByBrand(String brand){
-		return (ArrayList<Sneaker>) sneakerRepo.findAllByBrand(brand);
+		return null;
 	}
 	
 	@ApiOperation(value= "add sneaker", notes = "add ALL parameters for a sneaker")

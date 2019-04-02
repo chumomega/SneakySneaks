@@ -21,13 +21,13 @@ public class Sneaker {
 	private String about;
 	private String picture;
 	
-	private @ManyToOne User user;
+	private @ManyToOne SneakyUser user;
 	
 	public Sneaker() {
 		
 	}
     
-    public Sneaker(String brand, String name, int size, double price, String about, String picture, User user) {
+    public Sneaker(String brand, String name, int size, double price, String about, String picture, SneakyUser user) {
     	this.setBrand(brand);
     	this.setName(name);
     	this.setSize(size);
@@ -36,6 +36,14 @@ public class Sneaker {
     	this.setPicture(picture);
     	this.user = user;
     }
+    
+    public void setUser(SneakyUser user) {
+		this.user = user;
+	}
+    
+    public SneakyUser getUser() {
+		return this.user;
+	}
 
 	public String getBrand() {
 		return brand;

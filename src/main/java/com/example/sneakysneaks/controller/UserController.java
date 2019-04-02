@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.sneakysneaks.database.UserRepository;
-import com.example.sneakysneaks.objects.User;
+import com.example.sneakysneaks.database.SneakyUserRepository;
+import com.example.sneakysneaks.objects.SneakyUser;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserController {
 	@Autowired
-	UserRepository repo;
+	SneakyUserRepository repo;
 	
     @ApiOperation(value= "check if database is up")
    	@RequestMapping(path="/api/user", method = RequestMethod.GET)
@@ -32,15 +32,15 @@ public class UserController {
     }
     @ApiOperation(value= "get list of users")
 	@RequestMapping(path="/api/users", method = RequestMethod.GET)
-    public ArrayList<User> getusers(){
-    	return (ArrayList<User>) repo.findAll();
+    public ArrayList<SneakyUser> getusers(){
+    	return (ArrayList<SneakyUser>) repo.findAll();
     	
     }
 
     @ApiOperation(value= "check if database is up")
 	@RequestMapping(path="/api/signup", method = RequestMethod.POST, consumes= "application/json")
     public String signupUser(String firstName, String lastName, String description, String email, String phoneNumber,String password) {
-    	repo.save(new User(firstName, lastName, description, email, phoneNumber, password));
+    	repo.save(new SneakyUser(firstName, lastName, description, email, phoneNumber, password));
     	
     	return "Signup User";
     	
