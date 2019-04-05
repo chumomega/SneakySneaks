@@ -1,4 +1,4 @@
-export default function follow(api, rootPath, relArray) {
+module.exports = function follow(api, rootPath, relArray) {
 	const root = api({
 		method: 'GET',
 		path: rootPath

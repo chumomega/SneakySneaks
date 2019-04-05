@@ -1,4 +1,4 @@
-define(function(require) {
+export default function(require) {
 
 	const interceptor = require('rest/interceptor');
 
@@ -14,4 +14,4 @@ define(function(require) {
 		}
 	});
 
-});
+};

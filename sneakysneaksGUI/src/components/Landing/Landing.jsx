@@ -4,9 +4,6 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
 import "./Landing.css";
-
-import { Link } from 'react-router-dom'
-
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 
 const root = '/api';
@@ -61,10 +58,11 @@ class Landing extends Component {
                 entity: newSneaker,
                 headers: { 'Content-Type': 'application/json' }
             })
-        }).then(response => {
-            return follow(client, root, [
-                { rel: 'sneakers', params: { 'size': this.state.pageSize } }]);
-        }).done(response => {
+        }).then(() => {
+                return follow(client, root, [
+                    { rel: 'sneakers', params: { 'size': this.state.pageSize } }
+                ]);
+            }).done(response => {
             if (typeof response.entity._links.last !== "undefined") {
                 this.onNavigate(response.entity._links.last.href);
             } else {
@@ -85,7 +83,7 @@ class Landing extends Component {
     }
 
     onDelete(sneaker) {
-        client({ method: 'DELETE', path: sneaker._links.self.href }).done(response => {
+        client({ method: 'DELETE', path: sneaker._links.self.href }).done(() => {
             this.loadFromServer(this.state.pageSize);
         });
     }
