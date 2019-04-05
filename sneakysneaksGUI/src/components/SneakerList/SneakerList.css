@@ -1,0 +1,15 @@
+.buttons{
+    margin: 2rem auto;
+    width: inherit;
+    display: inline-block;
+
+}
+.btn-group-wrap{
+    text-align: center;
+    
+}
+
+.page-header{
+    text-align: center;
+
+ }

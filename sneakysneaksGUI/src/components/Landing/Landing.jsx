@@ -3,6 +3,9 @@ import SneakerList from '../SneakerList/SneakerList';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
+import "./Landing.css";
+
+import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 
@@ -12,16 +15,16 @@ class Landing extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sneakers: [], 
-            attributes: [], 
-            pageSize: 3, 
+            sneakers: [],
+            attributes: [],
+            pageSize: 3,
             links: {}
         }
 
-		this.updatePageSize = this.updatePageSize.bind(this);
-		this.onCreate = this.onCreate.bind(this);
-		this.onDelete = this.onDelete.bind(this);
-		this.onNavigate = this.onNavigate.bind(this);
+        this.updatePageSize = this.updatePageSize.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.onNavigate = this.onNavigate.bind(this);
     }
 
 
@@ -82,7 +85,7 @@ class Landing extends Component {
     }
 
     onDelete(sneaker) {
-        client({method: 'DELETE', path: sneaker._links.self.href}).done(response => {
+        client({ method: 'DELETE', path: sneaker._links.self.href }).done(response => {
             this.loadFromServer(this.state.pageSize);
         });
     }
@@ -96,18 +99,23 @@ class Landing extends Component {
 
     render() {
         return (
-            <div className="">
-                <h1>This is the landing page. Welcome Dana</h1>
-                <ErrorBoundary>
-                    <CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate}/>
-                    <SneakerList sneakers={this.state.sneakers} 
-                        listName="Main" 
-                        links={this.state.links}
-                        pageSize={this.state.pageSize}
-                        onNavigate={this.onNavigate}
-                        onDelete={this.onDelete}
-                        updatePageSize={this.updatePageSize}/>
-                </ErrorBoundary>
+            <div className="d-flex justify-content-center">
+                <div className="jumbotron">
+                    <div className="page-header">
+                        <h1>This is the landing page. Welcome Dana</h1>
+                        <CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate} />
+                    </div>
+                    
+                    <ErrorBoundary>
+                        <SneakerList sneakers={this.state.sneakers}
+                            listName="Main"
+                            links={this.state.links}
+                            pageSize={this.state.pageSize}
+                            onNavigate={this.onNavigate}
+                            onDelete={this.onDelete}
+                            updatePageSize={this.updatePageSize} />
+                    </ErrorBoundary>
+                </div>
 
             </div>
         );

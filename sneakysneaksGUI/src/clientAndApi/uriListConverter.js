@@ -1,5 +1,4 @@
 define(function() {
-	'use strict';
 
 	/* Convert a single or array of resources into "URI1\nURI2\nURI3..." */
 	return {

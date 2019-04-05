@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import Sneaker from '../Sneaker/Sneaker'
 import ReactDOM from 'react-dom'
+import "./SneakerList.css"
 
 class SneakerList extends Component {
     constructor(props) {
         super(props)
 
         this.handleNavFirst = this.handleNavFirst.bind(this);
-		this.handleNavPrev = this.handleNavPrev.bind(this);
-		this.handleNavNext = this.handleNavNext.bind(this);
-		this.handleNavLast = this.handleNavLast.bind(this);
+        this.handleNavPrev = this.handleNavPrev.bind(this);
+        this.handleNavNext = this.handleNavNext.bind(this);
+        this.handleNavLast = this.handleNavLast.bind(this);
         this.handleInput = this.handleInput.bind(this);
-        
+
         this.state = {
-            sneakers: [], 
-            attributes: [], 
-            pageSize: 3, 
+            sneakers: [],
+            attributes: [],
+            pageSize: 3,
             links: {
                 first: "null"
             }
@@ -53,39 +54,46 @@ class SneakerList extends Component {
 
     render() {
         const sneakers = this.props.sneakers.map(sneaker =>
-            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} onDelete={this.props.onDelete}/>
+            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} onDelete={this.props.onDelete} />
         );
         const listName = this.props.listName;
 
         const navLinks = [];
         if ("first" in this.props.links) {
-            navLinks.push(<button key="first" onClick={this.handleNavFirst}>&lt;&lt;</button>);
+            navLinks.push(<button key="first" onClick={this.handleNavFirst} type="button" className="btn btn-info btn-secondary">First</button>);
         }
         if ("prev" in this.props.links) {
-            navLinks.push(<button key="prev" onClick={this.handleNavPrev}>&lt;</button>);
+            navLinks.push(<button key="prev" onClick={this.handleNavPrev} type="button" className="btn btn-info btn-secondary">Prev</button>);
         }
         if ("next" in this.props.links) {
-            navLinks.push(<button key="next" onClick={this.handleNavNext}>&gt;</button>);
+            navLinks.push(<button key="next" onClick={this.handleNavNext} type="button" className="btn btn-info btn-secondary">Next</button>);
         }
         if ("last" in this.props.links) {
-            navLinks.push(<button key="last" onClick={this.handleNavLast}>&gt;&gt;</button>);
+            navLinks.push(<button key="last" onClick={this.handleNavLast} type="button" className="btn btn-info btn-secondary">Last</button>);
         }
 
         return (
             <div>
-                <h1>{listName} Sneakers</h1>
-                <input ref="pageSize" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput}/>
-			
 
-                {sneakers}
-                <div>
-                    {navLinks}
+                <h1 className="page-header">{listName} Sneakers</h1>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"># items</span>
+                    </div>
+                    <input ref="pageSize" className="form-control" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput} />
+                    </div>
+                    {sneakers}
+                    <div className="btn-group-wrap">
+                        <div className="btn-group buttons" role="group" aria-label="Basic example">
+                            {navLinks}
+                        </div>
+                    </div>
+
+
                 </div>
-
-            </div>
-        )
-    }
-}
-
-
+                )
+            }
+        }
+        
+        
 export default SneakerList
