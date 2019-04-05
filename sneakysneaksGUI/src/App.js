@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Login from './components/Login/Login';
 import Landing from './components/Landing/Landing';
+import CreateSneaker from './components/CreateSneaker/CreateSneaker';
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/landing" component={Landing} />
+            <Route path="/addsneaker" component={CreateSneaker} />
             {/* <Route path="/register" component />
             <Route path="/about" component />
             <Route path="/sneakers" component />

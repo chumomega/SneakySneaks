@@ -47,6 +47,12 @@ public class SneakysneaksController {
 		return (ArrayList<Sneaker>) sneakerRepo.findAll();
 	}
 	
+	@ApiOperation(value= "returns a list of your shoes", notes = " enter the user to do a search for their shoes")
+	@RequestMapping(path="/getMySneakers", method = RequestMethod.GET, produces = "application/hal+json")
+	public ArrayList<Sneaker> getMySneakers(){
+		return (ArrayList<Sneaker>) sneakerRepo.findAll();
+	}
+	
 	
 	@ApiOperation(value= "returns a list of shoes", notes = " enter the brand to do a search for the shoe")
 	@RequestMapping(path="/findbrand", method = RequestMethod.GET, consumes= "application/json", produces = "application/json")
