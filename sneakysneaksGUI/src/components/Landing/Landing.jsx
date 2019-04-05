@@ -4,7 +4,8 @@ import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
 import "./Landing.css";
-import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+const follow = require('../../clientAndAPi/follow');
+//import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 
 const root = '/api';
 
