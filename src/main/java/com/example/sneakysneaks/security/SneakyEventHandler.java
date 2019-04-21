@@ -14,11 +14,11 @@ import com.example.sneakysneaks.objects.SneakyUser;
 @Component
 @RepositoryEventHandler(Sneaker.class)
 public class SneakyEventHandler {
-	private final SneakyUserRepository sneakerRepository;
+	private final SneakyUserRepository userRepository;
 	
 	@Autowired
-	public SneakyEventHandler(SneakyUserRepository sneakerRepository) {
-		this.sneakerRepository = sneakerRepository;
+	public SneakyEventHandler(SneakyUserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 	@HandleBeforeCreate
@@ -26,12 +26,12 @@ public class SneakyEventHandler {
 	public void applyUserInformationUsingSecurityContext(Sneaker sneaker) {
 
 		String name = SecurityContextHolder.getContext().getAuthentication().getName();
-		SneakyUser user = this.sneakerRepository.findByfirstName(name);
+		SneakyUser user = this.userRepository.findByfirstName(name);
 		if (user == null) {
 			SneakyUser newUser = new SneakyUser();
 			newUser.setFirstName(name);
 			newUser.setRoles(new String[]{"SNEAKER_MANAGER"});
-			user = this.sneakerRepository.save(newUser);
+			user = this.userRepository.save(newUser);
 		}
 		sneaker.setUser(user);
 	}
