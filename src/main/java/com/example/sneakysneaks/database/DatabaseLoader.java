@@ -32,7 +32,7 @@ public class DatabaseLoader implements CommandLineRunner {
 				new UsernamePasswordAuthenticationToken("Frodo", "doesn't matter", AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
 		
 		this.sneakerRepo.save(new Sneaker ("HealthCheck", "HealthCheck", 0, 0, "This is a test","https://www.google.com/", frodo));
-		this.sneakerRepo.save(new Sneaker ("HealthCheck", "HealthCheck", 0, 0, "This is a test","https://www.google.com/", frodo));
+		this.sneakerRepo.save(new Sneaker ("Mason Margiela", "Replicas", 13, 200, "Black red and white leather replicas","koddf", frodo));
 		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 13, 150, "This AF1 comes with a black upper, white Nike “Swoosh”, black midsole, and a black sole.","bladsf", frodo));
 		this.sneakerRepo.save(new Sneaker ("Nike", "Sean Wotherspoon Air Maxes", 13, 160, "These are the Sean WOtherspoon grails", "rfrenjlink", frodo));
 		

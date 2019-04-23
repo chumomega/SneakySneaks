@@ -86,7 +86,7 @@ class SneakerList extends Component {
                     <div className="input-group-prepend">
                         <span className="input-group-text" id="basic-addon1"># items</span>
                     </div>
-                    <input ref="pageSize" className="form-control" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput} />
+                        <input ref="pageSize" className="form-control" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput} />
                     </div>
                     {sneakers}
                     <div className="btn-group-wrap">

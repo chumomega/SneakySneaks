@@ -36,13 +36,22 @@ class CreateSneaker extends Component {
 
         return (
             <div id="createSneaker" className="modalDialog">
-                <Popup trigger={<button type="button" className="btn btn-warning">Create</button>}>
-                    <h2>Create new Sneaker</h2>
-                    <form>
-                        {inputs}
-                        <button className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
-                    </form>
-                </Popup>
+                <div>
+                    <a href="#createEmployee" className="btn btn-warning">Create</a>
+
+                    <div id="createSneaker" className="modalDialog">
+                        <div>
+                            <a href="#" title="Close" className="close">X</a>
+
+                            <h2>Create new Sneaker</h2>
+
+                            <form>
+                                {inputs}
+                                <button className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

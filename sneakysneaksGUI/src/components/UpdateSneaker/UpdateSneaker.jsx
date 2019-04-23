@@ -20,15 +20,16 @@ class SneakerList extends Component {
     
     render() {
         const inputs = this.props.attributes.map(attribute =>
-			<p key={this.props.sneaker.entity[attribute]}>
-				<input type="text" placeholder={attribute}
-					   defaultValue={this.props.sneaker.entity[attribute]}
-					   ref={attribute} className="field"/>
+			<p key={attribute}>
+                <input type="text" 
+                    placeholder={attribute}
+					defaultValue={this.props.sneaker.entity[attribute]}
+                    ref={attribute}
+                    className="field"/>
 			</p>
 		);
 
-		const dialogId = "updateSneaker-" + this.props.sneaker.entity._links.self.href;
-
+        const dialogId = "updateSneaker-" + this.props.sneaker.entity._links.self.href;
 
         return(
             <div key={this.props.sneaker.entity._links.self.href}>
@@ -37,7 +38,7 @@ class SneakerList extends Component {
 					<div>
 						<a href="#" title="Close" className="close">X</a>
 
-						<h2>Update an sneaker</h2>
+						<h2>Update a sneaker</h2>
 
 						<form>
 							{inputs}
@@ -50,6 +51,15 @@ class SneakerList extends Component {
         )
     }
 }
+
+// <Popup trigger={<button type="button" className="btn btn-warning">Create</button>}>
+//                     <h2>Create new Sneaker</h2>
+//                     <form>
+//                         {inputs}
+//                         <button className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
+//                     </form>
+//                 </Popup>
+
         
         
 export default SneakerList
