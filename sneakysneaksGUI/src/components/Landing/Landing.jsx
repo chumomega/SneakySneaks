@@ -5,11 +5,13 @@ import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
 import "./Landing.css";
 
+
 import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 
 const root = '/api';
+const when = require('when');
 
 class Landing extends Component {
     constructor(props) {
@@ -22,6 +24,7 @@ class Landing extends Component {
         }
 
         this.updatePageSize = this.updatePageSize.bind(this);
+		this.onUpdate = this.onUpdate.bind(this);
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onNavigate = this.onNavigate.bind(this);
@@ -42,17 +45,29 @@ class Landing extends Component {
                 headers: { 'Accept': 'application/schema+json' }
             }).then(schema => {
                 this.schema = schema.entity;
+                this.links = sneakerCollection.entity._links;
                 return sneakerCollection;
             });
-        }).done(sneakerCollection => {
+        }).then(sneakerCollection => {
+            return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
+                    client({
+                        method: 'GET',
+                        path: sneaker._links.self.href
+                    })
+            );
+	}).then(sneakerPromises => {
+		return when.all(sneakerPromises);
+        
+        }).done(sneakers => {
             this.setState({
-                sneakers: sneakerCollection.entity._embedded.sneakers,
+                sneakers: sneakers,
                 attributes: Object.keys(this.schema.properties),
                 pageSize: pageSize,
-                links: sneakerCollection.entity._links
+                links: this.links
             });
         });
     }
+
     onCreate(newSneaker) {
         follow(client, root, ['sneakers']).then(sneakerCollection => {
             return client({
@@ -73,15 +88,50 @@ class Landing extends Component {
         });
     }
 
+    // tag::update[]
+	onUpdate(sneaker, updatedSneaker) {
+		client({
+			method: 'PUT',
+			path: sneaker.entity._links.self.href,
+			entity: updatedSneaker,
+			headers: {
+				'Content-Type': 'application/json',
+				'If-Match': sneaker.headers.Etag
+			}
+		}).done(response => {
+			this.loadFromServer(this.state.pageSize);
+		}, response => {
+			if (response.status.code === 412) {
+				alert('DENIED: Unable to update ' +
+					sneaker.entity._links.self.href + '. Your copy is stale.');
+			}
+		});
+	}
+	// end::update[]
+
     onNavigate(navUri) {
-        client({ method: 'GET', path: navUri }).done(sneakerCollection => {
-            this.setState({
-                sneakers: sneakerCollection.entity._embedded.sneakers,
-                attributes: this.state.attributes,
-                pageSize: this.state.pageSize,
-                links: sneakerCollection.entity._links
+        client({ 
+            method: 'GET', 
+            path: navUri 
+        }).then(sneakerCollection => {
+            this.links = sneakerCollection.entity._links;
+
+            return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
+                        client({
+                            method: 'GET',
+                            path: sneaker._links.self.href
+                        })
+                );
+            }).then(sneakerPromises => {
+                return when.all(sneakerPromises);
+            }).done(sneakers => {
+                this.setState({
+                    sneakers: sneakers,
+                    attributes: Object.keys(this.schema.properties),
+                    pageSize: this.state.pageSize,
+                    links: this.links
+                });
             });
-        });
     }
 
     onDelete(sneaker) {
@@ -110,9 +160,11 @@ class Landing extends Component {
                         <SneakerList sneakers={this.state.sneakers}
                             listName="Main"
                             links={this.state.links}
+                            attributes={this.state.attributes}
                             pageSize={this.state.pageSize}
                             onNavigate={this.onNavigate}
                             onDelete={this.onDelete}
+                            onUpdate={this.onUpdate}
                             updatePageSize={this.updatePageSize} />
                     </ErrorBoundary>
                 </div>

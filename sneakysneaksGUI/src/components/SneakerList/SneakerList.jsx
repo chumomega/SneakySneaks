@@ -54,7 +54,13 @@ class SneakerList extends Component {
 
     render() {
         const sneakers = this.props.sneakers.map(sneaker =>
-            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} onDelete={this.props.onDelete} />
+            <Sneaker 
+                key={sneaker.entity._links.self.href}
+                sneaker={sneaker} 
+                attributes={this.props.attributes}
+                onDelete={this.props.onDelete} 
+                onUpdate={this.props.onUpdate}
+                />
         );
         const listName = this.props.listName;
 
@@ -76,9 +82,9 @@ class SneakerList extends Component {
             <div>
 
                 <h1 className="page-header">{listName} Sneakers</h1>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"># items</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="basic-addon1"># items</span>
                     </div>
                     <input ref="pageSize" className="form-control" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput} />
                     </div>

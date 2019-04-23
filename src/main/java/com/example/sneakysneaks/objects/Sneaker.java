@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import lombok.Data;
 
@@ -22,6 +25,9 @@ public class Sneaker {
 	private String picture;
 	
 	private @ManyToOne SneakyUser user;
+
+	private @Version @JsonIgnore Long version;
+
 	
 	public Sneaker() {
 		
