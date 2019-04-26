@@ -9,10 +9,10 @@ import "./Landing.css";
 import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+import stompClient from '../../clientAndAPi/websocket-listener'
 
 const root = '/api';
 const when = require('when');
-
 class Landing extends Component {
     constructor(props) {
         super(props)
@@ -33,6 +33,11 @@ class Landing extends Component {
 
     componentDidMount() {
         this.loadFromServer(this.state.pageSize)
+        stompClient.register([
+			{route: '/topic/newSneaker', callback: this.refreshAndGoToLastPage},
+			{route: '/topic/updateSneaker', callback: this.refreshCurrentPage},
+			{route: '/topic/deleteSneaker', callback: this.refreshCurrentPage}
+		]);
     }
 
     loadFromServer(pageSize) {
@@ -99,11 +104,11 @@ class Landing extends Component {
 				'If-Match': sneaker.headers.Etag
 			}
 		}).done(response => {
+            /* Let the websocket handler update the state */
 			this.loadFromServer(this.state.pageSize);
 		}, response => {
 			if (response.status.code === 412) {
-				alert('DENIED: Unable to update ' +
-					sneaker.entity._links.self.href + '. Your copy is stale.');
+				alert('DENIED: Unable to update ' + sneaker.entity._links.self.href + '. Your copy is stale.');
 			}
 		});
 	}
@@ -135,9 +140,7 @@ class Landing extends Component {
     }
 
     onDelete(sneaker) {
-        client({ method: 'DELETE', path: sneaker._links.self.href }).done(response => {
-            this.loadFromServer(this.state.pageSize);
-        });
+        client({ method: 'DELETE', path: sneaker.entity._links.self.href});
     }
 
     updatePageSize(pageSize) {

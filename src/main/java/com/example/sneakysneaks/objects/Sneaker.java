@@ -42,6 +42,10 @@ public class Sneaker {
     	this.setPicture(picture);
     	this.user = user;
     }
+   
+    public Long getProductNumber() {
+		return this.product_number;
+	}
     
     public void setUser(SneakyUser user) {
 		this.user = user;
