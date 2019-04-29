@@ -76,9 +76,9 @@ class SneakerList extends Component {
             <div>
 
                 <h1 className="page-header">{listName} Sneakers</h1>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"># items</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="basic-addon1"># items</span>
                     </div>
                     <input ref="pageSize" className="form-control" value={this.state.value} defaultValue={this.props.pageSize} onInput={this.handleInput} />
                     </div>

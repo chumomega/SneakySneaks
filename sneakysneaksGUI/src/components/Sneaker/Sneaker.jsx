@@ -16,7 +16,7 @@ class Sneaker extends Component {
                 <div className="card-body">
                 <h5 className="card-title">{this.props.name}</h5>
                 <p className="card-text">The brand is {this.props.brand} and the size is {this.props.size}</p>
-                <button type="button" class="btn btn-secondary" onClick={this.handleDelete}>Delete</button>
+                <button type="button" className="btn btn-secondary" onClick={this.handleDelete}>Delete</button>
                 </div>
             </div>
         );
