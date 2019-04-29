@@ -35,22 +35,16 @@ class CreateSneaker extends Component {
         );
 
         return (
-            <div id="createSneaker" className="modalDialog">
-                <div>
-                    <a href="#createEmployee" className="btn btn-warning">Create</a>
+            <div>
+                <button type="button" className="btn btn-warning">Create</button>
+                <div id="createSneaker" className="modalDialog">
 
-                    <div id="createSneaker" className="modalDialog">
-                        <div>
-                            <a href="#" title="Close" className="close">X</a>
+                    <a href="#" title="Close" className="close">X</a>
 
-                            <h2>Create new Sneaker</h2>
-
-                            <form>
-                                {inputs}
-                                <button className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
-                            </form>
-                        </div>
-                    </div>
+                    <form>
+                        {inputs}
+                        <button className="btn btn-primary" onClick={this.handleSubmit}>Create</button>
+                    </form>
                 </div>
             </div>
         )

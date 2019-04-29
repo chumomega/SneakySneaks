@@ -34,6 +34,7 @@
 * [API Documentation] (https://safe-anchorage-62211.herokuapp.com/swagger-ui.html)
 * [React Turorial] (https://reactjs.org/)
 * [Spring Boot Info] (https://spring.io/projects/spring-boot)
+* [Basic Git Tutorial] (https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
 
 # Thank you !
