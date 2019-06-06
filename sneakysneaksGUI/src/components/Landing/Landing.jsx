@@ -19,6 +19,7 @@ class Landing extends Component {
         this.state = {
             sneakers: [],
             attributes: [],
+            page: 1,
             pageSize: 3,
             links: {}
         }
@@ -54,6 +55,7 @@ class Landing extends Component {
                 return sneakerCollection;
             });
         }).then(sneakerCollection => {
+            this.page = sneakerCollection.entity.page;
             return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
                     client({
                         method: 'GET',
@@ -62,9 +64,9 @@ class Landing extends Component {
             );
 	}).then(sneakerPromises => {
 		return when.all(sneakerPromises);
-        
         }).done(sneakers => {
             this.setState({
+				page: this.page,
                 sneakers: sneakers,
                 attributes: Object.keys(this.schema.properties),
                 pageSize: pageSize,
@@ -93,7 +95,6 @@ class Landing extends Component {
         });
     }
 
-    // tag::update[]
 	onUpdate(sneaker, updatedSneaker) {
 		client({
 			method: 'PUT',
@@ -112,7 +113,6 @@ class Landing extends Component {
 			}
 		});
 	}
-	// end::update[]
 
     onNavigate(navUri) {
         client({ 
@@ -120,6 +120,7 @@ class Landing extends Component {
             path: navUri 
         }).then(sneakerCollection => {
             this.links = sneakerCollection.entity._links;
+            this.page = sneakerCollection.entity.page;
 
             return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
                         client({
@@ -131,6 +132,7 @@ class Landing extends Component {
                 return when.all(sneakerPromises);
             }).done(sneakers => {
                 this.setState({
+				    page: this.page,
                     sneakers: sneakers,
                     attributes: Object.keys(this.schema.properties),
                     pageSize: this.state.pageSize,
@@ -149,6 +151,48 @@ class Landing extends Component {
         }
     }
 
+    refreshAndGoToLastPage(message) {
+		follow(client, root, [{
+			rel: 'sneakers',
+			params: {size: this.state.pageSize}
+		}]).done(response => {
+			if (response.entity._links.last !== undefined) {
+				this.onNavigate(response.entity._links.last.href);
+			} else {
+				this.onNavigate(response.entity._links.self.href);
+			}
+		})
+    }
+    
+    refreshCurrentPage(message) {
+		follow(client, root, [{
+			rel: 'sneakers',
+			params: {
+				size: this.state.pageSize,
+				page: this.state.page.number
+			}
+		}]).then(sneakerCollection => {
+			this.links = sneakerCollection.entity._links;
+			this.page = sneakerCollection.entity.page;
+
+			return sneakerCollection.entity._embedded.sneakers.map(sneaker => {
+				return client({
+					method: 'GET',
+					path: sneaker._links.self.href
+				})
+			});
+		}).then(sneakerPromises => {
+			return when.all(sneakerPromises);
+		}).then(sneakers => {
+			this.setState({
+				page: this.page,
+				sneakers: sneakers,
+				attributes: Object.keys(this.schema.properties),
+				pageSize: this.state.pageSize,
+				links: this.links
+			});
+		});
+	}
 
     render() {
         return (
@@ -161,6 +205,7 @@ class Landing extends Component {
                     
                     <ErrorBoundary>
                         <SneakerList sneakers={this.state.sneakers}
+                            page={this.state.page}
                             listName="Main"
                             links={this.state.links}
                             attributes={this.state.attributes}
