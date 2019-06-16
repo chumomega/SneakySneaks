@@ -94,8 +94,9 @@ class Landing extends Component {
             });
         });
     }
+    
     onCreate(newSneaker) {
-        follow(client, root, ['sneakers']).then(sneakerCollection => {
+        this.follow(client, root, ['sneakers']).then(sneakerCollection => {
             return client({
                 method: 'POST',
                 path: sneakerCollection.entity._links.self.href,
@@ -103,7 +104,7 @@ class Landing extends Component {
                 headers: { 'Content-Type': 'application/json' }
             })
         }).then(response => {
-            return follow(client, root, [
+            return this.follow(client, root, [
                 { rel: 'sneakers', params: { 'size': this.state.pageSize } }]);
         }).done(response => {
             if (typeof response.entity._links.last !== "undefined") {
