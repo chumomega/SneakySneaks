@@ -63,7 +63,8 @@ public class SneakysneaksController {
 	@ApiOperation(value= "add sneaker", notes = "add ALL parameters for a sneaker")
 	@RequestMapping(path="/addSneaker", method = RequestMethod.POST, consumes= "application/json", produces = "application/json")
 	public boolean addSneaker(String brand, String name, int size, double price, String about, String picture){
-		sneakerRepo.save(new Sneaker(brand, name, size, price, about, picture, null));
+		sneakerRepo.save(new Sneaker(brand, name, size, price, about, picture));
+		//removed , null from the parameter list above
 		return false;
 	}
 	
