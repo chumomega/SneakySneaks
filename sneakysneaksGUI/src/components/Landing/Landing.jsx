@@ -7,7 +7,7 @@ import "./Landing.css";
 
 import { Link } from 'react-router-dom'
 
-//import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+import follow from '../../clientAndAPi/follow.js'; // function to hop multiple links by "rel"
 
 const root = '/api';
 
@@ -26,47 +26,6 @@ class Landing extends Component {
         this.onDelete = this.onDelete.bind(this);
         this.onNavigate = this.onNavigate.bind(this);
     }
-    //temperorary fix
-    follow(api, rootPath, relArray) {
-        const root = api({
-            method: 'GET',
-            path: rootPath
-        });
-    
-        return relArray.reduce(function(root, arrayItem) {
-            const rel = typeof arrayItem === 'string' ? arrayItem : arrayItem.rel;
-            return traverseNext(root, rel, arrayItem);
-        }, root);
-    
-        function traverseNext (root, rel, arrayItem) {
-            return root.then(function (response) {
-                if (hasEmbeddedRel(response.entity, rel)) {
-                    return response.entity._embedded[rel];
-                }
-    
-                if(!response.entity._links) {
-                    return [];
-                }
-    
-                if (typeof arrayItem === 'string') {
-                    return api({
-                        method: 'GET',
-                        path: response.entity._links[rel].href
-                    });
-                } else {
-                    return api({
-                        method: 'GET',
-                        path: response.entity._links[rel].href,
-                        params: arrayItem.params
-                    });
-                }
-            });
-        }
-    
-        function hasEmbeddedRel (entity, rel) {
-            return entity._embedded && entity._embedded.hasOwnProperty(rel);
-        }
-    };
 
 
     componentDidMount() {
@@ -74,7 +33,7 @@ class Landing extends Component {
     }
 
     loadFromServer(pageSize) {
-        this.follow(client, root, [
+        follow(client, root, [
             { rel: 'sneakers', params: { size: pageSize } }]
         ).then(sneakerCollection => {
             return client({
