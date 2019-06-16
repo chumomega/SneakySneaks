@@ -54,7 +54,14 @@ class SneakerList extends Component {
 
     render() {
         const sneakers = this.props.sneakers.map(sneaker =>
-            <Sneaker key={sneaker._links.self.href} key1={sneaker._links.self.href} name={sneaker.name} brand={sneaker.brand} size={sneaker.size} sneaker={sneaker} onDelete={this.props.onDelete} />
+            <Sneaker key={sneaker.entity._links.self.href} 
+                name={sneaker.name} 
+                brand={sneaker.brand} 
+                size={sneaker.size} 
+                sneaker={sneaker}
+                attributes={this.props.attributes}
+                onDelete={this.props.onDelete}  
+                onUpdate={this.props.onUpdate} />
         );
         const listName = this.props.listName;
 

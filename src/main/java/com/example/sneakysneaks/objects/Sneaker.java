@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -20,30 +23,33 @@ public class Sneaker {
 	private double price;
 	private String about;
 	private String picture;
+	private @Version @JsonIgnore Long version;
 	
-	private @ManyToOne SneakyUser user;
+	//private @ManyToOne SneakyUser user;
 	
 	public Sneaker() {
 		
 	}
     
-    public Sneaker(String brand, String name, int size, double price, String about, String picture, SneakyUser user) {
+    public Sneaker(String brand, String name, int size, double price, String about, String picture) {
+    	//, SneakyUser user
+    	// removed from parameter list
     	this.setBrand(brand);
     	this.setName(name);
     	this.setSize(size);
     	this.setPrice(price);
     	this.setAbout(about);
     	this.setPicture(picture);
-    	this.user = user;
+    	//this.user = user;
     }
     
-    public void setUser(SneakyUser user) {
-		this.user = user;
-	}
-    
-    public SneakyUser getUser() {
-		return this.user;
-	}
+//    public void setUser(SneakyUser user) {
+//		this.user = user;
+//	}
+//    
+//    public SneakyUser getUser() {
+//		return this.user;
+//	}
 
 	public String getBrand() {
 		return brand;
