@@ -1,5 +1,7 @@
 package com.example.sneakysneaks.objects;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,6 +52,26 @@ public class Sneaker {
 //    public SneakyUser getUser() {
 //		return this.user;
 //	}
+    
+    @Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Sneaker sneaker = (Sneaker) o;
+		return Objects.equals(product_number, sneaker.product_number) &&
+			Objects.equals(name, sneaker.name) &&
+			Objects.equals(size, sneaker.size) &&
+			Objects.equals(price, sneaker.price) &&
+			Objects.equals(about, sneaker.about) &&
+			Objects.equals(picture, sneaker.picture) &&
+			Objects.equals(version, sneaker.version);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, size, price, about, picture, version);
+	}
+
 
 	public String getBrand() {
 		return brand;
@@ -97,6 +119,32 @@ public class Sneaker {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public Long getProductNumber() {
+		return this.product_number;
+	}
+	
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "Sneaker{" +
+			"product_number=" + product_number +
+			", name='" + name + '\'' +
+			", price='" + price + '\'' +
+			", about='" + about + '\'' +
+			", picture=" + picture + '\'' +
+			", version=" + version +
+			'}';
+	
 	}
     
 

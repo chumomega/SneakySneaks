@@ -3,6 +3,7 @@ import SneakerList from '../SneakerList/SneakerList';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import CreateSneaker from '../CreateSneaker/CreateSneaker';
 import client from '../../clientAndApi/client';
+
 import "./Landing.css";
 
 import { Link } from 'react-router-dom'
@@ -11,6 +12,8 @@ import { Link } from 'react-router-dom'
 
 const root = '/api';
 const when = require('when');
+
+const stompClient = require('../../clientAndApi/websocket-listener');
 
 class Landing extends Component {
     constructor(props) {
@@ -27,6 +30,7 @@ class Landing extends Component {
         this.onCreate = this.onCreate.bind(this);
         this.onDelete = this.onDelete.bind(this);
         this.onNavigate = this.onNavigate.bind(this);
+		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
     }
     //put this method in a seperate file for modularity
     follow(api, rootPath, relArray) {
@@ -73,7 +77,42 @@ class Landing extends Component {
 
     componentDidMount() {
         this.loadFromServer(this.state.pageSize)
+		stompClient.register([
+			{route: '/topic/newSneaker', callback: this.refreshAndGoToLastPage},
+			{route: '/topic/updateSneaker', callback: this.refreshCurrentPage},
+			{route: '/topic/deleteSneaker', callback: this.refreshCurrentPage}
+		]);
     }
+
+    refreshCurrentPage(message) {
+		follow(client, root, [{
+			rel: 'sneakers',
+			params: {
+				size: this.state.pageSize,
+				page: this.state.page.number
+			}
+		}]).then(sneakerCollection => {
+			this.links = sneakerCollection.entity._links;
+			this.page = sneakerCollection.entity.page;
+
+			return sneakerCollection.entity._embedded.sneakers.map(sneaker => {
+				return client({
+					method: 'GET',
+					path: sneaker._links.self.href
+				})
+			});
+		}).then(sneakerPromises => {
+			return when.all(sneakerPromises);
+		}).then(sneakers => {
+			this.setState({
+				page: this.page,
+				sneakers: sneakers,
+				attributes: Object.keys(this.schema.properties),
+				pageSize: this.state.pageSize,
+				links: this.links
+			});
+		});
+	}
 
     loadFromServer(pageSize) {
         this.follow(client, root, [
@@ -109,24 +148,50 @@ class Landing extends Component {
     }
     
     onCreate(newSneaker) {
-        this.follow(client, root, ['sneakers']).then(sneakerCollection => {
-            return client({
-                method: 'POST',
-                path: sneakerCollection.entity._links.self.href,
-                entity: newSneaker,
-                headers: { 'Content-Type': 'application/json' }
-            })
-        }).then(response => {
-            return this.follow(client, root, [
-                { rel: 'sneakers', params: { 'size': this.state.pageSize } }]);
-        }).done(response => {
-            if (typeof response.entity._links.last !== "undefined") {
-                this.onNavigate(response.entity._links.last.href);
-            } else {
-                this.onNavigate(response.entity._links.self.href);
-            }
-        });
+        follow(client, root, ['sneakers']).done(response => {
+			client({
+				method: 'POST',
+				path: response.entity._links.self.href,
+				entity: newSneaker,
+				headers: {'Content-Type': 'application/json'}
+			})
+		})
+
+
+
+        // this.follow(client, root, ['sneakers']).then(sneakerCollection => {
+        //     return client({
+        //         method: 'POST',
+        //         path: sneakerCollection.entity._links.self.href,
+        //         entity: newSneaker,
+        //         headers: { 'Content-Type': 'application/json' }
+        //     })
+        // }).then(response => {
+        //     return this.follow(client, root, [
+        //         { rel: 'sneakers', params: { 'size': this.state.pageSize } }]);
+        // }).done(response => {
+        //     if (typeof response.entity._links.last !== "undefined") {
+        //         this.onNavigate(response.entity._links.last.href);
+        //     } else {
+        //         this.onNavigate(response.entity._links.self.href);
+        //     }
+        // });
     }
+
+    // websocket-handlers
+	refreshAndGoToLastPage(message) {
+		follow(client, root, [{
+			rel: 'sneakers',
+			params: {size: this.state.pageSize}
+		}]).done(response => {
+			if (response.entity._links.last !== undefined) {
+				this.onNavigate(response.entity._links.last.href);
+			} else {
+				this.onNavigate(response.entity._links.self.href);
+			}
+		})
+	}
+
 
     onNavigate(navUri) {
         client({
