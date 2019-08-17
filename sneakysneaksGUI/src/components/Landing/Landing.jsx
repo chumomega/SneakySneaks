@@ -148,7 +148,7 @@ class Landing extends Component {
     }
     
     onCreate(newSneaker) {
-        follow(client, root, ['sneakers']).done(response => {
+        this.follow(client, root, ['sneakers']).done(response => {
 			client({
 				method: 'POST',
 				path: response.entity._links.self.href,
@@ -180,7 +180,7 @@ class Landing extends Component {
 
     // websocket-handlers
 	refreshAndGoToLastPage(message) {
-		follow(client, root, [{
+		this.follow(client, root, [{
 			rel: 'sneakers',
 			params: {size: this.state.pageSize}
 		}]).done(response => {
