@@ -20,7 +20,8 @@ class Sneaker extends Component {
                 <UpdateSneaker 
                     sneaker={this.props.sneaker}
                     attributes={this.props.attributes}
-                    onUpdate={this.props.onUpdate}/>
+                    onUpdate={this.props.onUpdate}
+					loggedInUser={this.props.loggedInUser}/>
                 <button type="button" className="btn btn-secondary" onClick={this.handleDelete}>Delete</button>
                 </div>
             </div>
@@ -29,3 +30,4 @@ class Sneaker extends Component {
 }
 
 export default Sneaker;
+///*<p className="card-text">This sneaker is owned by {this.props.sneaker.user.firstName}</p>*/

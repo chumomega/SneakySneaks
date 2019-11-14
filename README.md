@@ -31,11 +31,9 @@
 
 
 ### Useful Links
-* [Deployed App] (https://secret-citadel-36764.herokuapp.com/)
-    * Sample User - Frodo
-    * Sample Password - poop101
+* [Live App] (https://secret-citadel-36764.herokuapp.com/)
 * [API Documentation] (https://secret-citadel-36764.herokuapp.com/swagger-ui.html)
-* [React Turorial] (https://reactjs.org/)
+* [React Tutorial] (https://reactjs.org/)
 * [Spring Boot Info] (https://spring.io/projects/spring-boot)
 * [Basic Git Tutorial] (https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
 
