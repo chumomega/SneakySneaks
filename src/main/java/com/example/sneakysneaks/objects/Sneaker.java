@@ -27,31 +27,29 @@ public class Sneaker {
 	private String picture;
 	private @Version @JsonIgnore Long version;
 	
-	//private @ManyToOne SneakyUser user;
+	private @ManyToOne SneakyUser user;
 	
 	public Sneaker() {
 		
 	}
     
-    public Sneaker(String brand, String name, int size, double price, String about, String picture) {
-    	//, SneakyUser user
-    	// removed from parameter list
-    	this.setBrand(brand);
-    	this.setName(name);
-    	this.setSize(size);
-    	this.setPrice(price);
-    	this.setAbout(about);
-    	this.setPicture(picture);
-    	//this.user = user;
+    public Sneaker(String brand, String name, int size, double price, String about, String picture, SneakyUser user) {
+    	this.brand = brand;
+    	this.name = name;
+    	this.size = size;
+    	this.price = price;
+    	this.about = about;
+    	this.picture = picture;
+    	this.user = user;
     }
     
-//    public void setUser(SneakyUser user) {
-//		this.user = user;
-//	}
-//    
-//    public SneakyUser getUser() {
-//		return this.user;
-//	}
+    public void setUser(SneakyUser user) {
+		this.user = user;
+	}
+    
+    public SneakyUser getUser() {
+		return this.user;
+	}
     
     @Override
 	public boolean equals(Object o) {
@@ -63,13 +61,13 @@ public class Sneaker {
 			Objects.equals(size, sneaker.size) &&
 			Objects.equals(price, sneaker.price) &&
 			Objects.equals(about, sneaker.about) &&
-			Objects.equals(picture, sneaker.picture) &&
-			Objects.equals(version, sneaker.version);
+			Objects.equals(version, sneaker.version) &&
+			Objects.equals(user, sneaker.user);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, size, price, about, picture, version);
+		return Objects.hash(product_number, name, size, price, about, picture, version, user);
 	}
 
 
@@ -143,6 +141,7 @@ public class Sneaker {
 			", about='" + about + '\'' +
 			", picture=" + picture + '\'' +
 			", version=" + version +
+			", user=" + user +
 			'}';
 	
 	}
