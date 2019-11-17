@@ -11,19 +11,17 @@ import com.example.sneakysneaks.objects.SneakyUser;
 public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, Long>{
 	
 	@Override
-	//@PreAuthorize("#sneaker?.user == null or #sneaker?.user?.name == authentication?.name")
-	@PreAuthorize("#sneaker?.user != null")
+	@PreAuthorize("#sneaker?.user == null or #sneaker?.user?.name == authentication?.name")
 	Sneaker save(@Param("sneaker") Sneaker sneaker);
 	
 	@Override
-	@PreAuthorize("@sneakerRepository.findById(#product_number)?.user?.name == authentication?.name")
+	@PreAuthorize("@sneakerRepository.findById(#product_number).get().user.name == authentication?.name")
 	void deleteById(@Param("product_number")Long product_number);
-	
+
 	@Override
 	@PreAuthorize("#sneaker?.user?.name == authentication?.name")
 	void delete(@Param("sneaker") Sneaker sneaker);
 
-//	@PreAuthorize("#user?.name == authentication?.name")
-//	Iterable<Sneaker> findAllByUser(@Param("user") SneakyUser user);
-//	
+	@PreAuthorize("#user?.name == authentication?.name")
+	Iterable<Sneaker> findByUser(@Param("user") SneakyUser user);
 }
