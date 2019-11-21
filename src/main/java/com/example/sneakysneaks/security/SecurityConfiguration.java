@@ -13,6 +13,7 @@ import com.example.sneakysneaks.objects.SneakyUser;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+//TODO - check out this security policy
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private SpringDataJpaUserDetailsService userDetailsService;
@@ -37,6 +38,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.and()
 			.httpBasic()
 				.and()
+				/*TODO
+				BASIC authentication is handy when you are experimenting with curl. Using curl to access a form-based
+				system is daunting. It’s important to recognize that authenticting with any mechanism over HTTP (not HTTPS)
+				puts you at risk of credentials being sniffed over the wire. CSRF is a good protocol to leave intact.
+				 It is simply disabled to make interaction with BASIC and curl easier. In production, it’s best to leave it on.
+				 */
 			.csrf().disable()
 			.logout()
 				.logoutSuccessUrl("/");

@@ -4,12 +4,19 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.example.sneakysneaks.objects.SneakyUser;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.Optional;
 
 
 @RepositoryRestResource(exported = false)
-public interface SneakyUserRepository extends Repository<SneakyUser, Long>{
- 
+public interface SneakyUserRepository extends Repository<SneakyUser, String>{
+//	@PreAuthorize("@sneakerRepository.findById(#product_number).get().user.name == authentication?.name")
+//	@PreAuthorize("@userRepository.findById(#user?.name)"
+//			"#user?.name == null or #sneaker?.user?.name == authentication?.name")
 	SneakyUser save(SneakyUser user);
+	//TODO - only for admins
+	Optional<SneakyUser> findById(String username);
 	SneakyUser findByName(String name);
 	SneakyUser findByEmail(String email);
 

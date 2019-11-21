@@ -21,8 +21,7 @@ import lombok.ToString;
 @ToString(exclude = "password")
 @Data
 public class SneakyUser {
-	@Id @GeneratedValue (strategy=GenerationType.AUTO)
-	private Long id;
+	@Id
 	private String name;
 	
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
@@ -93,7 +92,7 @@ public class SneakyUser {
 	@Override
 	public int hashCode() {
 
-		int result = Objects.hash(id, name, email, password);
+		int result = Objects.hash(name, email, password);
 		result = 31 * result + Arrays.hashCode(roles);
 		return result;
 	}
@@ -104,8 +103,7 @@ public class SneakyUser {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		SneakyUser user = (SneakyUser) o;
-		return Objects.equals(id, user.id) &&
-			Objects.equals(name, user.name) &&
+		return Objects.equals(name, user.name) &&
 			Objects.equals(email, user.email) &&
 			Objects.equals(password, user.password) &&
 			Arrays.equals(roles, user.roles);

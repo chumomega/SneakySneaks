@@ -21,6 +21,7 @@ public class SneakyEventHandler {
 		this.userRepository = userRepository;
 	}
 
+	//TODO - remove this code and depend on the DBAs or Security Ops team to properly maintain the user data store
 	@HandleBeforeCreate
 	@HandleBeforeSave
 	public void applyUserInformationUsingSecurityContext(Sneaker sneaker) {
