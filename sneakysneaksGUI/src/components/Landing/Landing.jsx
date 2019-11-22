@@ -8,7 +8,7 @@ import "./Landing.css";
 
 import { Link } from 'react-router-dom'
 
-//import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 
 const root = '/api';
 const when = require('when');

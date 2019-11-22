@@ -11,11 +11,10 @@ import com.example.sneakysneaks.objects.SneakyUser;
 //@PreAuthorize("hasRole('SNEAKY_USER')")
 @RepositoryRestResource(collectionResourceRel = "sneakers", path = "sneakers")
 public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, Long>{
-	
 	@Override
 	@PreAuthorize("#sneaker?.user == null or #sneaker?.user?.name == authentication?.name")
 	Sneaker save(@Param("sneaker") Sneaker sneaker);
-	
+
 	@Override
 	@PreAuthorize("@sneakerRepository.findById(#product_number).get().user.name == authentication?.name")
 	void deleteById(@Param("product_number")Long product_number);
