@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 
-class CreateSneaker extends Component {
+class UpdateSneaker extends Component {
 
     constructor(props) {
 		super(props);
@@ -12,8 +12,6 @@ class CreateSneaker extends Component {
 		e.preventDefault();
 		const updatedSneaker = {};
 		this.props.attributes.forEach(attribute => {
-            console.log("This is the attribute: " + attribute);
-            console.log("This is the ref: " + this.refs[attribute]);
             updatedSneaker[attribute] = ReactDOM.findDOMNode(this.refs[attribute]).value.trim();
             
         });
@@ -54,4 +52,4 @@ class CreateSneaker extends Component {
 
 }
 
-export default CreateSneaker;
+export default UpdateSneaker;
