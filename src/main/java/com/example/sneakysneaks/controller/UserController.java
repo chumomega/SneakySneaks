@@ -33,7 +33,7 @@ public class UserController {
     @ApiOperation(value= "get existing user")
 	@RequestMapping(path="/sneakyuser", method = RequestMethod.GET, consumes= "application/json", produces = "application/json")
     public SneakyUser getUser(String userName) {
-        Optional<SneakyUser> potentialUser = userRepository.findById(userName);
-        return potentialUser.orElse(null);
+        SneakyUser potentialUser = userRepository.findByName(userName);
+        return potentialUser;
     }
 }

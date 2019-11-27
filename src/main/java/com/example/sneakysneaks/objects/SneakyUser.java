@@ -21,20 +21,19 @@ import lombok.ToString;
 @ToString(exclude = "password")
 @Data
 public class SneakyUser {
-	@Id
 	private String name;
-	
+	private @Id @GeneratedValue Long id;
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 	private @JsonIgnore String password;
 	private String description;
-	private String email;
-	private String phoneNumber;
+	private @JsonIgnore String email;
+	private @JsonIgnore String phoneNumber;
 
 	public SneakyUser() {
-		
+
 	}
-	
-	private String[] roles;
+
+	private @JsonIgnore String[] roles;
 
 	public void setPassword(String password) {
 		this.password = PASSWORD_ENCODER.encode(password);
@@ -103,7 +102,8 @@ public class SneakyUser {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		SneakyUser user = (SneakyUser) o;
-		return Objects.equals(name, user.name) &&
+		return Objects.equals(id, user.id) &&
+				Objects.equals(name, user.name) &&
 			Objects.equals(email, user.email) &&
 			Objects.equals(password, user.password) &&
 			Arrays.equals(roles, user.roles);

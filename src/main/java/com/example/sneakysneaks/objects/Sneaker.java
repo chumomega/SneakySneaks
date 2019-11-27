@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Sneaker {
-	@Id @GeneratedValue (strategy=GenerationType.AUTO)
+	@Id @GeneratedValue (strategy=GenerationType.AUTO) @JsonIgnore
 	private Long product_number;
 	private String brand;
 	private String name;
@@ -28,10 +28,6 @@ public class Sneaker {
 	private @Version @JsonIgnore Long version;
 	
 	private @ManyToOne SneakyUser user;
-	
-	public Sneaker() {
-		
-	}
     
     public Sneaker(String brand, String name, int size, double price, String about, String picture, SneakyUser user) {
     	this.brand = brand;
@@ -145,6 +141,4 @@ public class Sneaker {
 			'}';
 	
 	}
-    
-
 }

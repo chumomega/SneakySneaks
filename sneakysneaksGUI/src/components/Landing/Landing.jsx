@@ -22,6 +22,7 @@ class Landing extends Component {
 			sneakers: [],
 			attributes: [],
 			pageSize: 3,
+			page: 1,
 			links: {}
 		}
 
@@ -31,6 +32,7 @@ class Landing extends Component {
 		this.onDelete = this.onDelete.bind(this);
 		this.onNavigate = this.onNavigate.bind(this);
 		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
+		this.refreshCurrentPage = this.refreshCurrentPage.bind(this);
 	}
 	//put this method in a seperate file for modularity
 	follow(api, rootPath, relArray) {

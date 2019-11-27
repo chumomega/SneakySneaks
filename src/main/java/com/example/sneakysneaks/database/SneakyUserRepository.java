@@ -10,13 +10,11 @@ import java.util.Optional;
 
 
 @RepositoryRestResource(exported = false)
-public interface SneakyUserRepository extends Repository<SneakyUser, String>{
+public interface SneakyUserRepository extends Repository<SneakyUser, Long>{
 //	@PreAuthorize("@sneakerRepository.findById(#product_number).get().user.name == authentication?.name")
 //	@PreAuthorize("@userRepository.findById(#user?.name)"
 //			"#user?.name == null or #sneaker?.user?.name == authentication?.name")
 	SneakyUser save(SneakyUser user);
-	//TODO - only for admins
-	Optional<SneakyUser> findById(String username);
 	SneakyUser findByName(String name);
 	SneakyUser findByEmail(String email);
 
