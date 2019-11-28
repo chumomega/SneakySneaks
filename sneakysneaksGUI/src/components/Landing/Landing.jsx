@@ -23,7 +23,8 @@ class Landing extends Component {
 			attributes: [],
 			pageSize: 3,
 			page: 1,
-			links: {}
+			links: {},
+			loggedInUser: this.props.loggedInUser
 		}
 
 		this.updatePageSize = this.updatePageSize.bind(this);
@@ -125,11 +126,28 @@ class Landing extends Component {
 				path: sneakerCollection.entity._links.profile.href,
 				headers: { 'Accept': 'application/schema+json' }
 			}).then(schema => {
+
+				/**
+				 * Filter unneeded JSON Schema properties, like uri references and
+				 * subtypes ($ref).
+				 */
+				Object.keys(schema.entity.properties).forEach(function (property) {
+					if (schema.entity.properties[property].hasOwnProperty('format') &&
+						schema.entity.properties[property].format === 'uri') {
+						delete schema.entity.properties[property];
+					}
+					else if (schema.entity.properties[property].hasOwnProperty('$ref')) {
+						delete schema.entity.properties[property];
+					}
+				});
+
+
 				this.schema = schema.entity;
 				this.links = sneakerCollection.entity._links;
 				return sneakerCollection;
 			});
 		}).then(sneakerCollection => {
+			this.page = sneakerCollection.entity.page;
 			return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
 				client({
 					method: 'GET',
@@ -140,6 +158,7 @@ class Landing extends Component {
 			return when.all(sneakerPromises);
 		}).done(sneakers => {
 			this.setState({
+				page: this.page,
 				sneakers: sneakers,
 				attributes: Object.keys(this.schema.properties),
 				pageSize: pageSize,
@@ -158,26 +177,6 @@ class Landing extends Component {
 				headers: { 'Content-Type': 'application/json' }
 			})
 		})
-
-
-
-		// this.follow(client, root, ['sneakers']).then(sneakerCollection => {
-		//     return client({
-		//         method: 'POST',
-		//         path: sneakerCollection.entity._links.self.href,
-		//         entity: newSneaker,
-		//         headers: { 'Content-Type': 'application/json' }
-		//     })
-		// }).then(response => {
-		//     return this.follow(client, root, [
-		//         { rel: 'sneakers', params: { 'size': this.state.pageSize } }]);
-		// }).done(response => {
-		//     if (typeof response.entity._links.last !== "undefined") {
-		//         this.onNavigate(response.entity._links.last.href);
-		//     } else {
-		//         this.onNavigate(response.entity._links.self.href);
-		//     }
-		// });
 	}
 
 	// websocket-handlers
@@ -201,6 +200,7 @@ class Landing extends Component {
 			path: navUri
 		}).then(sneakerCollection => {
 			this.links = sneakerCollection.entity._links;
+			this.page = sneakerCollection.entity.page;
 
 			return sneakerCollection.entity._embedded.sneakers.map(sneaker =>
 				client({
@@ -212,6 +212,7 @@ class Landing extends Component {
 			return when.all(sneakerPromises);
 		}).done(sneakers => {
 			this.setState({
+				page: this.page,
 				sneakers: sneakers,
 				attributes: Object.keys(this.schema.properties),
 				pageSize: this.state.pageSize,
@@ -223,13 +224,10 @@ class Landing extends Component {
 
 	onDelete(sneaker) {
 		client({ method: 'DELETE', path: sneaker.entity._links.self.href })
-			.done(response => {
-				//websocket handles this
-				/*this.loadFromServer(this.state.pageSize);*/
+			.done(response => {//websocket handles updating UI
 			}, response => {
-					if (response.status.code === 403) {
-				alert('ACCESS DENIED: You are not authorized to delete ' +
-						sneaker.entity._links.self.href);
+				if (response.status.code === 403) {
+					alert('ACCESS DENIED: You are not authorized to delete ' + sneaker.entity._links.self.href);
 				}
 			});
 
@@ -280,7 +278,8 @@ class Landing extends Component {
 					</div>
 
 					<ErrorBoundary>
-						<SneakerList sneakers={this.state.sneakers}
+						<SneakerList page={this.state.page}
+							sneakers={this.state.sneakers}
 							attributes={this.state.attributes}
 							listName="Main"
 							links={this.state.links}
@@ -288,7 +287,8 @@ class Landing extends Component {
 							onNavigate={this.onNavigate}
 							onDelete={this.onDelete}
 							updatePageSize={this.updatePageSize}
-							onUpdate={this.onUpdate} />
+							onUpdate={this.onUpdate} 
+							loggedInUser={this.state.loggedInUser}/>
 					</ErrorBoundary>
 				</div>
 

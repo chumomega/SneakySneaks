@@ -50,7 +50,7 @@ public class EventHandler {
 	 */
 	private String getPath(Sneaker sneaker) {
 		return this.entityLinks.linkForSingleResource(sneaker.getClass(),
-				sneaker.getProductNumber()).toUri().getPath();
+				sneaker.getId()).toUri().getPath();
 	}
 
 

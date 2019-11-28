@@ -53,6 +53,9 @@ class SneakerList extends Component {
     }
 
     render() {
+        const pageInfo = this.props.page.hasOwnProperty("number") ?
+			<h3>Sneakers - Page {this.props.page.number + 1} of {this.props.page.totalPages}</h3> : null;
+
         const sneakers = this.props.sneakers.map(sneaker =>
             <Sneaker key={sneaker.entity._links.self.href} 
                 name={sneaker.name} 
@@ -61,7 +64,9 @@ class SneakerList extends Component {
                 sneaker={sneaker}
                 attributes={this.props.attributes}
                 onDelete={this.props.onDelete}  
-                onUpdate={this.props.onUpdate} />
+                onUpdate={this.props.onUpdate} 
+                loggedInUser={this.props.loggedInUser}
+                />
         );
         const listName = this.props.listName;
 
@@ -81,7 +86,7 @@ class SneakerList extends Component {
 
         return (
             <div>
-
+                {pageInfo}
                 <h1 className="page-header">{listName} Sneakers</h1>
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">

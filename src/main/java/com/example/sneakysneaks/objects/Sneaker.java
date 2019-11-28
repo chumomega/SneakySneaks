@@ -17,8 +17,8 @@ import lombok.Data;
 @Data
 @Entity
 public class Sneaker {
-	@Id @GeneratedValue (strategy=GenerationType.AUTO) @JsonIgnore
-	private Long product_number;
+	@Id @GeneratedValue
+	private Long id;
 	private String brand;
 	private String name;
 	private int size; 
@@ -52,7 +52,7 @@ public class Sneaker {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Sneaker sneaker = (Sneaker) o;
-		return Objects.equals(product_number, sneaker.product_number) &&
+		return Objects.equals(id, sneaker.id) &&
 			Objects.equals(name, sneaker.name) &&
 			Objects.equals(size, sneaker.size) &&
 			Objects.equals(price, sneaker.price) &&
@@ -63,7 +63,7 @@ public class Sneaker {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(product_number, name, size, price, about, picture, version, user);
+		return Objects.hash(id, name, size, price, about, picture, version, user);
 	}
 
 
@@ -115,8 +115,8 @@ public class Sneaker {
 		this.picture = picture;
 	}
 
-	public Long getProductNumber() {
-		return this.product_number;
+	public Long getId() {
+		return this.id;
 	}
 	
 	public Long getVersion() {
@@ -131,7 +131,7 @@ public class Sneaker {
 	@Override
 	public String toString() {
 		return "Sneaker{" +
-			"product_number=" + product_number +
+			"id=" + id +
 			", name='" + name + '\'' +
 			", price='" + price + '\'' +
 			", about='" + about + '\'' +
