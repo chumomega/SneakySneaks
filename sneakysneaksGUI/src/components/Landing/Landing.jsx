@@ -287,7 +287,7 @@ class Landing extends Component {
 							onNavigate={this.onNavigate}
 							onDelete={this.onDelete}
 							updatePageSize={this.updatePageSize}
-							onUpdate={this.onUpdate} 
+							onUpdate={this.onUpdate}
 							loggedInUser={this.state.loggedInUser}/>
 					</ErrorBoundary>
 				</div>
