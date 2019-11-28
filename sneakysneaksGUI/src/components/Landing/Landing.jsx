@@ -240,7 +240,7 @@ class Landing extends Component {
 	}
 
 	onUpdate(sneaker, updatedSneaker) {
-		if (sneaker.entity.user.firstName === this.state.loggedInUser) {
+		if (sneaker.entity.user.name === this.state.loggedInUser) {
 			updatedSneaker["user"] = sneaker.entity.user;
 			client({
 				method: 'PUT',
@@ -252,7 +252,6 @@ class Landing extends Component {
 				}
 			}).done(response => {
 				/* Let the websocket handler update the state */
-				/*this.loadFromServer(this.state.pageSize);*/
 			}, response => {
 				if (response.status.code === 403) {
 					alert('ACCESS DENIED: You are not authorized to update ' + sneaker.entity._links.self.href);
@@ -264,7 +263,7 @@ class Landing extends Component {
 			});
 		}
 		else {
-			alert("You are not authorized to update");
+			alert("Can't touch this lmaoo");
 		}
 	}
 
@@ -273,7 +272,7 @@ class Landing extends Component {
 			<div className="d-flex justify-content-center">
 				<div className="jumbotron">
 					<div className="page-header">
-						<h1>This is the landing page. Welcome Dana</h1>
+						<h1>This is the landing page. Welcome {this.state.loggedInUser}</h1>
 						<CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate} />
 					</div>
 

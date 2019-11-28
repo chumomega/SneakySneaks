@@ -9,7 +9,7 @@ class Home extends Component {
             <div className="d-flex justify-content-center">
                 <div className="jumbotron ">
                     <div className="page-header">
-                        <h1 className="display-4">Welcome to SneakySneaks Dana</h1>
+                        <h1 className="display-4">Welcome to SneakySneaks!</h1>
                         <p>Come check out some gear</p>
                     </div>
                     

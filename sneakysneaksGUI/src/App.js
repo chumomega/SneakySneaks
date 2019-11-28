@@ -30,7 +30,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/landing" component={Landing} />
+            <Route path="/landing" 
+              render={(props) => <Landing {...props} loggedInUser={this.props.loggedInUser} />}
+              />
             <Route path="/addsneaker" component={CreateSneaker} />
             {/* <Route path="/register" component />
             <Route path="/about" component />
