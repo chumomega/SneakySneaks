@@ -7,9 +7,9 @@ import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import com.example.sneakysneaks.database.SneakyUserRepository;
-import com.example.sneakysneaks.objects.Sneaker;
-import com.example.sneakysneaks.objects.SneakyUser;
+import com.example.sneakysneaks.repository.SneakyUserRepository;
+import com.example.sneakysneaks.model.Sneaker;
+import com.example.sneakysneaks.model.SneakyUser;
 
 @Component
 @RepositoryEventHandler(Sneaker.class)

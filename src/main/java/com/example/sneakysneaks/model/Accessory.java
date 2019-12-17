@@ -1,4 +1,4 @@
-package com.example.sneakysneaks.objects;
+package com.example.sneakysneaks.model;
 
 public class Accessory {
 	private int product_number;

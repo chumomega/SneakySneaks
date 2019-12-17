@@ -1,10 +1,9 @@
-package com.example.sneakysneaks.objects;
+package com.example.sneakysneaks.model;
 
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
@@ -12,7 +11,6 @@ import javax.persistence.Version;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
-
 
 @Data
 @Entity

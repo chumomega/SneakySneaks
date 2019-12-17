@@ -1,11 +1,10 @@
-package com.example.sneakysneaks.objects;
+package com.example.sneakysneaks.model;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,8 +20,8 @@ import lombok.ToString;
 @ToString(exclude = "password")
 @Data
 public class SneakyUser {
-	private String name;
 	private @Id @GeneratedValue Long id;
+	private String name;
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 	private @JsonIgnore String password;
 	private String description;

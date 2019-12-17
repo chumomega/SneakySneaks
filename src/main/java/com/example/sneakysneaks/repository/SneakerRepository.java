@@ -1,12 +1,12 @@
-package com.example.sneakysneaks.database;
+package com.example.sneakysneaks.repository;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import com.example.sneakysneaks.objects.Sneaker;
-import com.example.sneakysneaks.objects.SneakyUser;
+import com.example.sneakysneaks.model.Sneaker;
+import com.example.sneakysneaks.model.SneakyUser;
 
 //@PreAuthorize("hasRole('SNEAKY_USER')")
 @RepositoryRestResource(collectionResourceRel = "sneakers", path = "sneakers")

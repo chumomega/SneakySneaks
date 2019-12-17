@@ -10,7 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 import static com.example.sneakysneaks.util.WebSocketConfiguration.*;
-import com.example.sneakysneaks.objects.Sneaker;
+import com.example.sneakysneaks.model.Sneaker;
 
 @Component
 @RepositoryEventHandler(Sneaker.class)
