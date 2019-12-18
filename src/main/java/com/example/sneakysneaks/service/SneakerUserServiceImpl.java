@@ -17,7 +17,6 @@ public class SneakerUserServiceImpl implements SneakyUserService {
     @Autowired
     private SneakyUserRepository sneakyUserRepository;
     
-    
 
     /**
      * @param SneakyUser
