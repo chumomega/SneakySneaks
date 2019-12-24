@@ -3,13 +3,14 @@ package com.example.sneakysneaks.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import com.example.sneakysneaks.model.SneakyUser;
 
 
 
-//@RepositoryRestResource(exported = false)
+@RepositoryRestResource(exported = false)
 @Repository
 public interface SneakyUserRepository extends CrudRepository<SneakyUser, Long> {
 
