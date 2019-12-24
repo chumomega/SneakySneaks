@@ -23,7 +23,7 @@ public class SneakyUser {
 	private @Id @GeneratedValue Long id;
 	private String name;
 	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-	private String password;
+	private @JsonIgnore String password;
 	private String description;
 	private @JsonIgnore String email;
 	private @JsonIgnore String phoneNumber;
