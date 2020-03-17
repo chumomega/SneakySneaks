@@ -9,6 +9,8 @@ import "./Landing.css";
 import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 
 const root = '/api';
 const when = require('when');
@@ -34,6 +36,17 @@ class Landing extends Component {
 		this.onNavigate = this.onNavigate.bind(this);
 		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
 		this.refreshCurrentPage = this.refreshCurrentPage.bind(this);
+		const firebaseConfig = {
+			apiKey: "AIzaSyAsZaOjy7keJANRciLzy3pN7dnoe7JEiF4",
+			authDomain: "sneakysneaks-2a021.firebaseapp.com",
+			databaseURL: "https://sneakysneaks-2a021.firebaseio.com",
+			projectId: "sneakysneaks-2a021",
+			storageBucket: "sneakysneaks-2a021.appspot.com",
+			messagingSenderId: "138993095540",
+			appId: "1:138993095540:web:66a5412e7352a42c62d221",
+			measurementId: "G-17W69VCVLH"
+		};
+		firebase.initializeApp(firebaseConfig);
 	}
 	//put this method in a seperate file for modularity
 	follow(api, rootPath, relArray) {
