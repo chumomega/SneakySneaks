@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 import * as firebase from "firebase/app";
-import "firebase/firestore";
+import "firebase/storage";
 
 const root = '/api';
 const when = require('when');
@@ -20,14 +20,6 @@ const stompClient = require('../../clientAndApi/websocket-listener');
 class Landing extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			sneakers: [],
-			attributes: [],
-			pageSize: 3,
-			page: 1,
-			links: {},
-			loggedInUser: this.props.loggedInUser
-		}
 
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.onUpdate = this.onUpdate.bind(this);
@@ -47,6 +39,19 @@ class Landing extends Component {
 			measurementId: "G-17W69VCVLH"
 		};
 		firebase.initializeApp(firebaseConfig);
+
+		//reference to the storage ref in the service
+		var storage_service = firebase.storage();
+
+		this.state = {
+			sneakers: [],
+			attributes: [],
+			pageSize: 3,
+			page: 1,
+			links: {},
+			loggedInUser: this.props.loggedInUser,
+			storage_service: storage_service
+		}
 	}
 	//put this method in a seperate file for modularity
 	follow(api, rootPath, relArray) {
@@ -286,7 +291,11 @@ class Landing extends Component {
 				<div className="jumbotron">
 					<div className="page-header">
 						<h1>This is the landing page. Welcome {this.state.loggedInUser}</h1>
-						<CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate} />
+						<CreateSneaker 
+							attributes={this.state.attributes} 
+							onCreate={this.onCreate} 
+							storage_service={this.state.storage_service}
+						/>
 					</div>
 
 					<ErrorBoundary>

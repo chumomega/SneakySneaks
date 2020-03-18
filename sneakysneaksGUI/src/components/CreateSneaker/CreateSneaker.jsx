@@ -23,6 +23,15 @@ class CreateSneaker extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const newSneaker = {};
+        const selectedFile = document.getElementById('image').files[0];
+        var filepath = ReactDOM.findDOMNode(this.refs['picture']).value.trim();
+        var storageRef = this.props.storage_service.ref().child(filepath);
+        
+        console.log("this is the filepath: " + filepath)
+        storageRef.put(selectedFile).then(function(snapshot) {
+            console.log('Uploaded a blob or file!');
+        })
+
         //TODO - create new sneaker out of properties in the state
         this.props.attributes.forEach(attribute => {
             newSneaker[attribute] = ReactDOM.findDOMNode(this.refs[attribute]).value.trim();
