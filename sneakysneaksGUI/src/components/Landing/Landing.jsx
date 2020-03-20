@@ -9,6 +9,8 @@ import "./Landing.css";
 import { Link } from 'react-router-dom'
 
 import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
+import * as firebase from "firebase/app";
+import "firebase/storage";
 
 const root = '/api';
 const when = require('when');
@@ -18,14 +20,6 @@ const stompClient = require('../../clientAndApi/websocket-listener');
 class Landing extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			sneakers: [],
-			attributes: [],
-			pageSize: 3,
-			page: 1,
-			links: {},
-			loggedInUser: this.props.loggedInUser
-		}
 
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.onUpdate = this.onUpdate.bind(this);
@@ -34,6 +28,30 @@ class Landing extends Component {
 		this.onNavigate = this.onNavigate.bind(this);
 		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
 		this.refreshCurrentPage = this.refreshCurrentPage.bind(this);
+		const firebaseConfig = {
+			apiKey: "AIzaSyAsZaOjy7keJANRciLzy3pN7dnoe7JEiF4",
+			authDomain: "sneakysneaks-2a021.firebaseapp.com",
+			databaseURL: "https://sneakysneaks-2a021.firebaseio.com",
+			projectId: "sneakysneaks-2a021",
+			storageBucket: "sneakysneaks-2a021.appspot.com",
+			messagingSenderId: "138993095540",
+			appId: "1:138993095540:web:66a5412e7352a42c62d221",
+			measurementId: "G-17W69VCVLH"
+		};
+		firebase.initializeApp(firebaseConfig);
+
+		//reference to the storage ref in the service
+		var storage_service = firebase.storage();
+
+		this.state = {
+			sneakers: [],
+			attributes: [],
+			pageSize: 3,
+			page: 1,
+			links: {},
+			loggedInUser: this.props.loggedInUser,
+			storage_service: storage_service
+		}
 	}
 	//put this method in a seperate file for modularity
 	follow(api, rootPath, relArray) {
@@ -273,7 +291,11 @@ class Landing extends Component {
 				<div className="jumbotron">
 					<div className="page-header">
 						<h1>This is the landing page. Welcome {this.state.loggedInUser}</h1>
-						<CreateSneaker attributes={this.state.attributes} onCreate={this.onCreate} />
+						<CreateSneaker 
+							attributes={this.state.attributes} 
+							onCreate={this.onCreate} 
+							storage_service={this.state.storage_service}
+						/>
 					</div>
 
 					<ErrorBoundary>
