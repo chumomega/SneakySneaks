@@ -6,9 +6,6 @@ import client from '../../clientAndApi/client';
 
 import "./Landing.css";
 
-import { Link } from 'react-router-dom'
-
-import follow from '../../clientAndAPi/follow'; // function to hop multiple links by "rel"
 import * as firebase from "firebase/app";
 import "firebase/storage";
 
@@ -106,7 +103,7 @@ class Landing extends Component {
 	}
 
 	refreshCurrentPage(message) {
-		follow(client, root, [{
+		this.follow(client, root, [{
 			rel: 'sneakers',
 			params: {
 				size: this.state.pageSize,
