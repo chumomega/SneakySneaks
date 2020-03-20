@@ -17,6 +17,7 @@ class CreateSneaker extends Component {
             about: '',
             brand: '',
             picture: '',
+            file: null
         }
     }
 
@@ -67,8 +68,10 @@ class CreateSneaker extends Component {
                 this_object.props.attributes.forEach(attribute => {
                     ReactDOM.findDOMNode(this_object.refs[attribute]).value = '';
                 });
+                this_object.setState({
+                    file: null
+                  })
             })
-            .then()
         })
 
 
@@ -77,17 +80,20 @@ class CreateSneaker extends Component {
     }
 
     previewImage(event) {
-
+        this.setState({
+            file: URL.createObjectURL(event.target.files[0])
+          })
     }
     
     getInputs() {
         let inputs = []
+        var this_object = this
         this.props.attributes.forEach(function(attribute){
             if (attribute == "picture") {
                 inputs.push(
                     <p key={attribute} className="form-group row">
-                        <input type="file" ref={attribute} name="pic" accept="image/*" id="image" placeholder="Image"/>
-                        <img src="" height="200" alt="Preview"></img>
+                        <input type="file" ref={attribute} name="pic" accept="image/*" id="image" placeholder="Image" onChange={this_object.previewImage} />
+                        <img id="preview" src={this_object.state.file} height="200" alt="Preview"></img>
                     </p>
                 )
             }
