@@ -18,7 +18,7 @@ class Sneaker extends Component {
                     <h5 className="card-title">{this.props.sneaker.entity.name}</h5>
                     <p className="card-text">The brand is {this.props.sneaker.entity.brand} and the size is 
                         {this.props.sneaker.entity.size}. These belong to <b>{this.props.sneaker.entity.user.name}</b></p>
-
+                    <img src={this.props.sneaker.entity.picture} className="img-fluid" alt="sneaker image"/>
                     <UpdateSneaker 
                         sneaker={this.props.sneaker}
                         attributes={this.props.attributes}

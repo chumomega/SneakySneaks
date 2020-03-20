@@ -30,27 +30,27 @@ public class DatabaseLoader implements CommandLineRunner {
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("Frodo", "poop101", AuthorityUtils.createAuthorityList("SNEAKY_USER")));
 
-		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 13, 150, "This AF1 comes with a black upper, white Nike “Swoosh”, black midsole, and a black sole.","bladsf", frodo));
-		this.sneakerRepo.save(new Sneaker ("Nike", "Sean Wotherspoon Air Maxes", 13, 160, "These are the Sean WOtherspoon grails", "rfrenjlink", frodo));
+		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 13, 150, "This AF1 comes with a black upper, white Nike “Swoosh”, black midsole, and a black sole.","https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/017/794/463/original/394710_01.jpg.jpeg?1547236891", frodo));
+		this.sneakerRepo.save(new Sneaker ("Nike", "Sean Wotherspoon Air Maxes", 13, 160, "These are the Sean WOtherspoon grails", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/017/794/463/original/394710_01.jpg.jpeg?1547236891", frodo));
 
 
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("chika", "doesn't matter", AuthorityUtils.createAuthorityList("SNEAKY_USER")));
 
 		this.sneakerRepo.save(new Sneaker (
-				"Nike", "Off-White Air Force One", 13, 150, "This AF1 comes with a black upper, white Nike “Swoosh”, black midsole, and a black sole.","bladsf", chika));
+				"Nike", "Off-White Air Force One", 13, 150, "This AF1 comes with a black upper, white Nike “Swoosh”, black midsole, and a black sole.","https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/017/794/463/original/394710_01.jpg.jpeg?1547236891", chika));
 		this.sneakerRepo.save(new Sneaker (
-				"Nike", "Sean Wotherspoon Air Maxes", 13, 160, "These are the Sean WOtherspoon grails", "rfrenjlink", chika));
-		this.sneakerRepo.save(new Sneaker ("Nike", "Travis Scott Air Force One", 9, 130,"la flame travis scott joints", "link is here", chika));
-		this.sneakerRepo.save(new Sneaker ("Adidas", "Triple White UltraBoost", 13, 180, "the og freshman year sneaker", "sdgr", chika));
+				"Nike", "Sean Wotherspoon Air Maxes", 13, 160, "These are the Sean WOtherspoon grails", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", chika));
+		this.sneakerRepo.save(new Sneaker ("Nike", "Travis Scott Air Force One", 9, 130,"la flame travis scott joints", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", chika));
+		this.sneakerRepo.save(new Sneaker ("Adidas", "Triple White UltraBoost", 13, 180, "the og freshman year sneaker", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", chika));
 //
 //
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("Ezuku", "doesn't matter", AuthorityUtils.createAuthorityList("SNEAKER_MANAGER")));
 
-		this.sneakerRepo.save(new Sneaker ("Reebok", "Vetements Instapump fury", 9, 150, "shouts to my son kareem for recommending these", "reg", ezuku));
-		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 9, 150, "this nigga sulaiman really baited on this", "rgefgv", ezuku));
-		this.sneakerRepo.save(new Sneaker ("Adidas", "Bronze Raf Simons Stan Smiths", 7, 120, "oh you fancy huh", "rfdsv", ezuku));
+		this.sneakerRepo.save(new Sneaker ("Reebok", "Vetements Instapump fury", 9, 150, "shouts to my son kareem for recommending these", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", ezuku));
+		this.sneakerRepo.save(new Sneaker ("Nike", "Off-White Air Force One", 9, 150, "this nigga sulaiman really baited on this", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", ezuku));
+		this.sneakerRepo.save(new Sneaker ("Adidas", "Bronze Raf Simons Stan Smiths", 7, 120, "oh you fancy huh", "https://image.goat.com/crop/750/attachments/product_template_additional_pictures/images/011/255/124/original/329483_01.jpg.jpeg?1523485320", ezuku));
 
 		SecurityContextHolder.clearContext();
 	}
