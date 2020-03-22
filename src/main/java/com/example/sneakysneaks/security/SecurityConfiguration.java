@@ -47,23 +47,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 				.antMatchers("/built/**", "/main.css").permitAll()
 				.antMatchers("/api/save/**").permitAll()
+				.antMatchers( "/public/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
-				.defaultSuccessUrl("/", true)
-				.permitAll()
-				.and()
-			.httpBasic()
-				.and()
+				.loginPage("/login.html")
+				.failureUrl("/login-error.html")
+				.permitAll();
+//				.and()
 				/*TODO
 				BASIC authentication is handy when you are experimenting with curl. Using curl to access a form-based
 				system is daunting. It’s important to recognize that authenticting with any mechanism over HTTP (not HTTPS)
 				puts you at risk of credentials being sniffed over the wire. CSRF is a good protocol to leave intact.
 				 It is simply disabled to make interaction with BASIC and curl easier. In production, it’s best to leave it on.
 				 */
-			.csrf().disable()
-			.logout()
-				.logoutSuccessUrl("/");
+//			.csrf().disable()
+//			.logout()
+//				.logoutSuccessUrl("/login.html");
 	}
 
 
