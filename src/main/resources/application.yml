@@ -1,12 +1,10 @@
 spring:
+  thymeleaf:
+    cache: false
   security:
     oauth2:
       client:
         registration:
-          okta:
-            client-id: {0oabd1tvqZA3ZMfke356}
-            client-secret: {nUMv4cvjcw8K-nIL5YWRNO6qOm_wc0wczuCoIh7H}
-            scope: openid, email, profile
-        provider:
-          okta:
-            issuer-uri: http://localhost:8080/login/oauth2/code/okta
+          github:
+            client-id: 07fefe7d172c94efbe60
+            client-secret: bb3f63997d9aad6b09b8813f5a5d64db70ffe29f

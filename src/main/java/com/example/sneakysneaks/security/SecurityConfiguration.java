@@ -18,13 +18,25 @@ import com.example.sneakysneaks.model.SneakyUser;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private SpringDataJpaUserDetailsService userDetailsService;
-	
+
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.userDetailsService(this.userDetailsService)
-				.passwordEncoder(SneakyUser.PASSWORD_ENCODER);
+	public void configure(HttpSecurity http) throws Exception {
+		http.antMatcher("/**")
+				.authorizeRequests()
+				.antMatchers("/", "/login**")
+				.permitAll()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.oauth2Login();
 	}
+
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth
+//			.userDetailsService(this.userDetailsService)
+//				.passwordEncoder(SneakyUser.PASSWORD_ENCODER);
+//	}
 	
 
 //	@Override
@@ -40,31 +52,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        
 //    }
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/built/**", "/main.css").permitAll()
-				.antMatchers("/api/save/**").permitAll()
-				.antMatchers( "/public/**").permitAll()
-				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.loginPage("/login.html")
-				.failureUrl("/login-error.html")
-				.permitAll();
+//
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+//		http
+//			.authorizeRequests()
+//				.antMatchers("/built/**", "/main.css").permitAll()
+//				.antMatchers("/api/save/**").permitAll()
+//				.antMatchers( "/public/**").permitAll()
+//				.anyRequest().authenticated()
 //				.and()
-				/*TODO
-				BASIC authentication is handy when you are experimenting with curl. Using curl to access a form-based
-				system is daunting. It’s important to recognize that authenticting with any mechanism over HTTP (not HTTPS)
-				puts you at risk of credentials being sniffed over the wire. CSRF is a good protocol to leave intact.
-				 It is simply disabled to make interaction with BASIC and curl easier. In production, it’s best to leave it on.
-				 */
-//			.csrf().disable()
-//			.logout()
-//				.logoutSuccessUrl("/login.html");
-	}
+//			.formLogin()
+//				.loginPage("/login.html")
+//				.failureUrl("/login-error.html")
+//				.permitAll();
+////				.and()
+//				/*TODO
+//				BASIC authentication is handy when you are experimenting with curl. Using curl to access a form-based
+//				system is daunting. It’s important to recognize that authenticting with any mechanism over HTTP (not HTTPS)
+//				puts you at risk of credentials being sniffed over the wire. CSRF is a good protocol to leave intact.
+//				 It is simply disabled to make interaction with BASIC and curl easier. In production, it’s best to leave it on.
+//				 */
+////			.csrf().disable()
+////			.logout()
+////				.logoutSuccessUrl("/login.html");
+//	}
 
 
 }
