@@ -1,14 +1,89 @@
- 
- .card{
-     max-width: 18rem;
-     margin: 0 auto;
+.home {
+    padding-top: 1rem;
+}
 
- }
- .card-title{
-     max-width: 10rem;
- }
-
- .page-header{
+.hero {
     text-align: center;
+    padding: 3rem 1rem 2.5rem;
+}
 
- }
+.hero h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero .lead {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 1.15rem;
+}
+
+.hero-cta {
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
+.feed-heading {
+    margin: 2rem 0 1.25rem;
+    font-size: 1.4rem;
+}
+
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.feed-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.feed-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.feed-card img,
+.feed-card .sneaker-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.feed-card-body {
+    padding: 0.85rem;
+}
+
+.feed-card-brand {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.feed-card-name {
+    font-weight: 600;
+    margin: 0.25rem 0;
+}
+
+.feed-card-meta {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.feed-card-owner {
+    color: #007bff;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}

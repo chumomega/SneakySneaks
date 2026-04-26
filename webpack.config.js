@@ -1,11 +1,11 @@
 var path = require('path');
 
 module.exports = {
-  //TODO -- Change to the real location of app.js 
   entry: './sneakysneaksGUI/src/index.js',
-  devtool: 'sourcemaps',
+  devtool: 'source-map',
   cache: true,
   mode: 'development',
+  target: 'web',
   output: {
     path: __dirname,
     filename: './src/main/resources/static/built/bundle.js'
@@ -13,27 +13,32 @@ module.exports = {
   module: {
     rules: [
       {
-        test: path.join(__dirname, '.'),
-        exclude: /(node_modules)/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: [{
           loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react", "@babel/preset-flow"]
+            presets: ["@babel/preset-env", "@babel/preset-react"]
           }
         }]
       },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
+    fallback: {
+      "url": false,
+      "http": false,
+      "https": false,
+      "stream": false,
+      "crypto": false,
+      "net": false,
+      "tls": false,
+      "fs": false
+    }
   }
 };

@@ -1,3 +1,71 @@
-.sneaker-container {
-    margin: 0 auto;
+.sneaker-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.sneaker-img-wrap {
+    aspect-ratio: 1 / 1;
+    background: #f0f0f0;
+}
+
+.sneaker-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sneaker-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.sneaker-body {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.sneaker-brand {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.sneaker-name {
+    font-weight: 600;
+    margin: 0.25rem 0;
+}
+
+.sneaker-meta {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.sneaker-about {
+    color: #444;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+    flex: 1;
+}
+
+.sneaker-owner {
+    color: #007bff;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.sneaker-actions {
+    display: flex;
+    margin-top: auto;
 }

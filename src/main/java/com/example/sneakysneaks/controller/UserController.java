@@ -1,69 +1,46 @@
 package com.example.sneakysneaks.controller;
 
+import java.util.Map;
+
 import com.example.sneakysneaks.service.SneakyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.sneakysneaks.repository.SneakyUserRepository;
 import com.example.sneakysneaks.model.SneakyUser;
 
-import io.swagger.annotations.ApiOperation;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
-	
-//	@Bean("encoder")
-//	public PasswordEncoder encoder() {
-//		return new BCryptPasswordEncoder();
-//	}
 
 	@Autowired
 	SneakyUserRepository userRepository;
 
 	@Autowired
-	SneakyUserService sneakyUserService; // adding intermediary service layer
+	SneakyUserService sneakyUserService;
 
-	@ApiOperation(value = "register new user")
-	@RequestMapping(path = "/sneakyuser", method = RequestMethod.POST, consumes = "application/json")
-	public SneakyUser registerUser(String userName, String description, String email, String phoneNumber,
-			String password) {
-		try {
-			return userRepository
-					.save(new SneakyUser(userName, description, email, phoneNumber, password, "SNEAKY_USER"));
-		} catch (IllegalArgumentException e) {
-			return null;
+	@GetMapping("/me")
+	public ResponseEntity<Map<String, String>> me(Authentication auth) {
+		if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
+			return ResponseEntity.status(401).build();
 		}
+		return ResponseEntity.ok(Map.of("name", auth.getName()));
 	}
 
-	@ApiOperation(value = "get existing user")
-	@RequestMapping(path = "/sneakyuser", method = RequestMethod.GET, consumes = "application/json", produces = "application/json")
-	public SneakyUser getUser(String userName) {
-		SneakyUser potentialUser = userRepository.findByName(userName);
-		return potentialUser;
-	}
-
-	/**
-	 * Allows user sign-up by passing in SneakyUser object
-	 * 
-	 * @param SneakerUSer to sign-up with
-	 */
 	@PostMapping("/save")
-	public SneakyUser saveUser(@RequestBody SneakyUser user) {
-		return sneakyUserService.saveUser(user);
+	public ResponseEntity<?> saveUser(@RequestBody SneakyUser user) {
+		if (user.getName() == null || user.getName().isBlank()) {
+			return ResponseEntity.badRequest().body(Map.of("error", "Username is required"));
+		}
+		if (userRepository.findByName(user.getName()) != null) {
+			return ResponseEntity.status(409).body(Map.of("error", "Username already taken"));
+		}
+		if (user.getRoles() == null || user.getRoles().length == 0) {
+			user.setRoles(new String[]{"SNEAKY_USER"});
+		}
+		SneakyUser saved = sneakyUserService.saveUser(user);
+		return ResponseEntity.ok(Map.of("name", saved.getName()));
 	}
-
-	/**
-	 * Allows user log-up by passing in username and password
-	 * 
-	 * @param String username
-	 * @param String password
-	 */
-//	@PostMapping("/login")
-//	public SneakyUser login(@PathVariable String name, @PathVariable String password) {
-//		return sneakyUserService.login(name, password);
-//	}
 }

@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
-import {
-  Link
-} from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../auth';
 
-class NavBar extends Component {
-  render() {
+function NavBar() {
+    const { user, loading } = useAuth();
 
     return (
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link to="/" className="navbar-brand">SneakySneaks</Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <Link to="/login" className="nav-item nav-link">Login</Link>
-              <Link to="/register" className="nav-item nav-link">Register</Link>
-              <Link to="/about" className="nav-item nav-link">About</Link>
-              <Link to="/sneakers" className="nav-item nav-link disabled">Sneakers</Link>
-              <Link to="/mysneakers" className="nav-item nav-link disabled">My Sneakers</Link>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <Link to="/" className="navbar-brand">SneakySneaks</Link>
+            <div className="navbar-nav mr-auto">
+                <Link to="/" className="nav-item nav-link">Feed</Link>
+                {user && <Link to="/landing" className="nav-item nav-link">My Closet</Link>}
             </div>
-          </div>
+            <div className="navbar-nav ml-auto">
+                {loading ? null : user ? (
+                    <>
+                        <span className="navbar-text mr-3">Hi, {user}</span>
+                        <form action="/logout" method="POST" className="form-inline">
+                            <button type="submit" className="btn btn-outline-light btn-sm">Log out</button>
+                        </form>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login" className="nav-item nav-link">Log in</Link>
+                        <Link to="/signup" className="btn btn-primary btn-sm ml-2">Sign up</Link>
+                    </>
+                )}
+            </div>
         </nav>
-      </div>
-
-    )
-
-  }
+    );
 }
 
 export default NavBar;

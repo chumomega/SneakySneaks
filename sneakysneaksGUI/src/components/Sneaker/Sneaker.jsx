@@ -1,35 +1,37 @@
-import React, { Component } from 'react';
-import UpdateSneaker from '../UpdateSneaker/UpdateSneaker'
-import "./Sneaker.css";
+import React from 'react';
+import UpdateSneaker from '../UpdateSneaker/UpdateSneaker';
+import SneakerImage from '../SneakerImage/SneakerImage';
+import './Sneaker.css';
 
-class Sneaker extends Component {
-    constructor(props) {
-		super(props);
-		this.handleDelete = this.handleDelete.bind(this);
-	}
-    handleDelete() {
-		this.props.onDelete(this.props.sneaker);
-    }
-    render() {
-        return (
-            <div className="card text-white bg-primary mb-3 sneaker-container">
-                <div className="card-header">{this.props.sneaker.entity.brand}</div>
-                <div className="card-body">
-                    <h5 className="card-title">{this.props.sneaker.entity.name}</h5>
-                    <p className="card-text">The brand is {this.props.sneaker.entity.brand} and the size is 
-                        {this.props.sneaker.entity.size}. These belong to <b>{this.props.sneaker.entity.user.name}</b></p>
-                    <img src={this.props.sneaker.entity.picture} className="img-fluid" alt="sneaker image"/>
-                    <UpdateSneaker 
-                        sneaker={this.props.sneaker}
-                        attributes={this.props.attributes}
-                        onUpdate={this.props.onUpdate}
-                        loggedInUser={this.props.loggedInUser}/>
-                    <button type="button" className="btn btn-secondary" onClick={this.handleDelete}>Delete</button>
-                </div>
+function Sneaker({ sneaker, onUpdate, onDelete, loggedInUser }) {
+    const isOwner = sneaker.entity.user?.name === loggedInUser;
+
+    return (
+        <div className="sneaker-card">
+            <div className="sneaker-img-wrap">
+                <SneakerImage src={sneaker.entity.picture} alt={sneaker.entity.name} />
             </div>
-        );
-    }
+            <div className="sneaker-body">
+                <div className="sneaker-brand">{sneaker.entity.brand}</div>
+                <div className="sneaker-name">{sneaker.entity.name}</div>
+                <div className="sneaker-meta">Size {sneaker.entity.size} · ${sneaker.entity.price}</div>
+                {sneaker.entity.about && <p className="sneaker-about">{sneaker.entity.about}</p>}
+                <div className="sneaker-owner">@{sneaker.entity.user?.name}</div>
+                {isOwner && (
+                    <div className="sneaker-actions">
+                        <UpdateSneaker sneaker={sneaker} onUpdate={onUpdate} />
+                        <button
+                            type="button"
+                            className="btn btn-outline-danger btn-sm ml-2"
+                            onClick={() => onDelete(sneaker)}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }
 
 export default Sneaker;
-///*<p className="card-text">This sneaker is owned by {this.props.sneaker.user.firstName}</p>*/

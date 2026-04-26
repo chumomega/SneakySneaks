@@ -1,4 +1,20 @@
-.page-header{
-    text-align: center;
+.landing {
+    padding-top: 0.5rem;
+}
 
- }
+.landing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.landing-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+}
+
+.landing-header p {
+    margin: 0.25rem 0 0;
+}

@@ -1,55 +1,49 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react';
+import Modal from '../Modal/Modal';
 
-class UpdateSneaker extends Component {
+const EDITABLE = ['brand', 'name', 'size', 'price', 'about', 'picture'];
 
-    constructor(props) {
-		super(props);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+function UpdateSneaker({ sneaker, onUpdate }) {
+    const [open, setOpen] = useState(false);
+    const [form, setForm] = useState(() =>
+        EDITABLE.reduce((acc, f) => ({ ...acc, [f]: sneaker.entity[f] ?? '' }), {})
+    );
 
-	handleSubmit(e) {
-		e.preventDefault();
-		const updatedSneaker = {};
-		this.props.attributes.forEach(attribute => {
-            updatedSneaker[attribute] = ReactDOM.findDOMNode(this.refs[attribute]).value.trim();
-            
-        });
-        
-		this.props.onUpdate(this.props.sneaker, updatedSneaker);
-		window.location = "#";
-	}
+    const update = (field) => (e) => setForm({ ...form, [field]: e.target.value });
 
-	render() {
-		const inputs = this.props.attributes.map(attribute =>
-			<p key={this.props.sneaker.entity[attribute]}>
-				<input type="text" placeholder={attribute}
-					   defaultValue={this.props.sneaker.entity[attribute]}
-					   ref={attribute} className="field"/>
-			</p>
-		);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const payload = { ...form };
+        if (payload.size) payload.size = Number(payload.size);
+        if (payload.price) payload.price = Number(payload.price);
+        onUpdate(sneaker, payload);
+        setOpen(false);
+    };
 
-		const dialogId = "updateSneaker-" + this.props.sneaker.entity._links.self.href;
-
-		return (
-			<div key={this.props.sneaker.entity._links.self.href}>
-				<a href={"#" + dialogId}>Update</a>
-				<div id={dialogId} className="modalDialog">
-					<div>
-						<a href="#" title="Close" className="close">X</a>
-
-						<h2>Update a sneaker</h2>
-
-						<form>
-							{inputs}
-							<button onClick={this.handleSubmit}>Update</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		)
-	}
-
+    return (
+        <>
+            <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => setOpen(true)}>
+                Edit
+            </button>
+            <Modal open={open} onClose={() => setOpen(false)} title="Edit sneaker">
+                <form onSubmit={handleSubmit}>
+                    {EDITABLE.map(field => (
+                        <div key={field} className="form-group">
+                            <label htmlFor={`us-${field}`}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                            <input
+                                id={`us-${field}`}
+                                type={['size', 'price'].includes(field) ? 'number' : 'text'}
+                                value={form[field]}
+                                onChange={update(field)}
+                                className="form-control"
+                            />
+                        </div>
+                    ))}
+                    <button type="submit" className="btn btn-primary">Save</button>
+                </form>
+            </Modal>
+        </>
+    );
 }
 
 export default UpdateSneaker;

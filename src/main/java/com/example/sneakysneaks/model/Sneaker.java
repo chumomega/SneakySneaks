@@ -2,11 +2,11 @@ package com.example.sneakysneaks.model;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +26,9 @@ public class Sneaker {
 	private @Version @JsonIgnore Long version;
 	
 	private @ManyToOne SneakyUser user;
-    
+
+    public Sneaker() {}
+
     public Sneaker(String brand, String name, int size, double price, String about, String picture, SneakyUser user) {
     	this.brand = brand;
     	this.name = name;

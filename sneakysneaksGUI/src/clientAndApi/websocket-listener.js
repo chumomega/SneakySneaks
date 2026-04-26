@@ -1,16 +1,16 @@
 'use strict';
 
-const SockJS = require('sockjs-client'); // <1>
-require('stompjs'); // <2>
+const SockJS = require('sockjs-client');
+const Stomp = require('stompjs');
 
 function register(registrations) {
-	const socket = SockJS('/sneakers'); // <3>
-	const stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
-		registrations.forEach(function (registration) { // <4>
-			stompClient.subscribe(registration.route, registration.callback);
-		});
-	});
+    const socket = SockJS('/sneakers');
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, function(frame) {
+        registrations.forEach(function (registration) {
+            stompClient.subscribe(registration.route, registration.callback);
+        });
+    });
 }
 
 module.exports.register = register;

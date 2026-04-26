@@ -1,70 +1,65 @@
 package com.example.sneakysneaks.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.sneakysneaks.model.SneakyUser;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-//TODO - check out this security policy
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	@Autowired
-	private SpringDataJpaUserDetailsService userDetailsService;
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.userDetailsService(this.userDetailsService)
-				.passwordEncoder(SneakyUser.PASSWORD_ENCODER);
-	}
-	
+@EnableMethodSecurity
+public class SecurityConfiguration {
 
-//	@Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http.cors().and()
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/api/save/**").permitAll()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        
-//    }
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	private final SpringDataJpaUserDetailsService userDetailsService;
+
+	public SecurityConfiguration(SpringDataJpaUserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return SneakyUser.PASSWORD_ENCODER;
+	}
+
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(passwordEncoder());
+		return provider;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests()
-				.antMatchers("/built/**", "/main.css").permitAll()
-				.antMatchers("/api/save/**").permitAll()
+			.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/built/**", "/main.css", "/index.css", "/manifest.json").permitAll()
+				.requestMatchers("/", "/login", "/signup", "/landing").permitAll()
+				.requestMatchers("/api/save/**", "/api/me").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/sneakers", "/api/sneakers/**", "/api/profile", "/api/profile/**").permitAll()
 				.anyRequest().authenticated()
-				.and()
-			.formLogin()
-				.defaultSuccessUrl("/", true)
+			)
+			.formLogin(form -> form
+				.loginPage("/login")
+				.loginProcessingUrl("/login")
+				.defaultSuccessUrl("/landing", true)
+				.failureUrl("/login?error")
 				.permitAll()
-				.and()
-			.httpBasic()
-				.and()
-				/*TODO
-				BASIC authentication is handy when you are experimenting with curl. Using curl to access a form-based
-				system is daunting. It’s important to recognize that authenticting with any mechanism over HTTP (not HTTPS)
-				puts you at risk of credentials being sniffed over the wire. CSRF is a good protocol to leave intact.
-				 It is simply disabled to make interaction with BASIC and curl easier. In production, it’s best to leave it on.
-				 */
-			.csrf().disable()
-			.logout()
-				.logoutSuccessUrl("/");
+			)
+			.httpBasic(basic -> {})
+			.csrf(csrf -> csrf.disable())
+			.logout(logout -> logout
+				.logoutSuccessUrl("/")
+				.permitAll()
+			);
+
+		return http.build();
 	}
-
-
 }

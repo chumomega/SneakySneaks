@@ -1,15 +1,18 @@
-.buttons{
-    margin: 2rem auto;
-    width: inherit;
-    display: inline-block;
-
-}
-.btn-group-wrap{
-    text-align: center;
-    
+.sneaker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
 }
 
-.page-header{
-    text-align: center;
+.page-info {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
 
- }
+.sneaker-nav {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}

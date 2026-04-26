@@ -1,6 +1,9 @@
 package com.example.sneakysneaks.repository;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,9 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import com.example.sneakysneaks.model.Sneaker;
 import com.example.sneakysneaks.model.SneakyUser;
 
-//@PreAuthorize("hasRole('SNEAKY_USER')")
 @RepositoryRestResource(collectionResourceRel = "sneakers", path = "sneakers")
-public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, Long>{
+public interface SneakerRepository extends JpaRepository<Sneaker, Long> {
 	@Override
 	@PreAuthorize("#sneaker?.user == null or #sneaker?.user?.name == authentication?.name")
 	Sneaker save(@Param("sneaker") Sneaker sneaker);
@@ -25,6 +27,9 @@ public interface SneakerRepository extends PagingAndSortingRepository<Sneaker, L
 
 	@PreAuthorize("#user?.name == authentication?.name")
 	Iterable<Sneaker> findByUser(@Param("user") SneakyUser user);
+
+	@Query("SELECT s FROM Sneaker s WHERE s.user.name = :name")
+	Page<Sneaker> findByOwner(@Param("name") String name, Pageable pageable);
 
 	Iterable<Sneaker> findByBrand(@Param("brand") String brand);
 	Iterable<Sneaker> findByName(@Param("name") String name);

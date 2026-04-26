@@ -1,26 +1,47 @@
-import React, { Component } from 'react';
-import {Link } from 'react-router-dom'
+import React from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
-class Login extends Component {
-  render() {
+function Login() {
+    const [searchParams] = useSearchParams();
+    const hasError = searchParams.has('error');
+
     return (
-      <div className="">
-        <form>
-          <div className="form-group">
-            <label htmlFor="exampleFormControlInput1">Email address</label>
-            <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+        <div className="auth-card">
+            <h2>Log in</h2>
+            {hasError && (
+                <div className="alert alert-danger" role="alert">
+                    Invalid username or password.
+                </div>
+            )}
+            <form action="/login" method="POST">
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        className="form-control"
+                        required
+                        autoFocus
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        className="form-control"
+                        required
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">Log in</button>
+            </form>
+            <p className="auth-footer">
+                New here? <Link to="/signup">Create an account</Link>
+            </p>
+        </div>
+    );
+}
 
-            <label htmlFor="exampleFormControlInput2">Password</label>
-            <input type="password" className="form-control" id="exampleFormControlInput2" placeholder="----------"/>
-
-            <Link to="/landing" className="btn btn-primary mb-2">Login</Link>
- 
-          </div>
-            
-          </form>
-      </div>
-        );
-      }
-    }
-    
-export default Login
+export default Login;
