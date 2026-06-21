@@ -2,7 +2,7 @@
 
 ### First Steps
 - Install Postgres(version ???). Here's a handy guide on [installing postgres using brew](https://github.com/CUNYTechPrep/ctp2018/blob/master/guides/installing-postgresql.md)
-- Start postgres service by running `brew services start postgresql` (on mac terminal fyi, maybe pc too?)
+- Start postgres service by running `brew services start postgresql` (On Mac fyi; Brew's alternative on Windows is Chocolatey)
 - open a postgres shell by typing `psql postgres`
 - once open we want to create a new database called "sneaky" run: `create database sneaky;`
 - run this java app (instructions in base README.md)
